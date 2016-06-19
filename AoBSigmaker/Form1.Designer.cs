@@ -89,6 +89,7 @@
             // 
             this.richTextBox2.Location = new System.Drawing.Point(12, 150);
             this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.ReadOnly = true;
             this.richTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.richTextBox2.Size = new System.Drawing.Size(392, 65);
             this.richTextBox2.TabIndex = 5;
@@ -103,6 +104,7 @@
             this.button3.TabIndex = 6;
             this.button3.Text = "Copy to Clipboard";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Form1
             // 

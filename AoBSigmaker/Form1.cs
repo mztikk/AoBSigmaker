@@ -108,5 +108,10 @@
         {
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(this.richTextBox2.Text);
+        }
     }
 }
