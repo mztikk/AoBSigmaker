@@ -21,13 +21,14 @@
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var fDialog = new OpenFileDialog
-                              {
-                                 Title = @"Open Text File", Filter = @"TXT files|*.txt", InitialDirectory = @"C:\" 
-                              };
-            if (fDialog.ShowDialog() != DialogResult.OK) return;
             try
             {
+                var fDialog = new OpenFileDialog
+                                  {
+                                     Title = @"Open Text File", Filter = @"TXT files|*.txt", InitialDirectory = @"C:\" 
+                                  };
+                if (fDialog.ShowDialog() != DialogResult.OK) return;
+
                 this.richTextBox1.Text = string.Empty;
                 var lines = File.ReadAllLines(fDialog.FileName);
                 for (var i = 0; i < lines.Length; i++)
@@ -102,16 +103,15 @@
             this.richTextBox2.Text = rtnPattern;
         }
 
-        #endregion
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button3_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(this.richTextBox2.Text);
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
+
+        #endregion
     }
 }
