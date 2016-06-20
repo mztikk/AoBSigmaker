@@ -84,7 +84,11 @@
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(this.richTextBox2.Text);
+            var rtn = this.richTextBox2.Text;
+            if (!string.IsNullOrEmpty(rtn))
+            {
+                Clipboard.SetText(rtn);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
