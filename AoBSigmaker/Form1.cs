@@ -6,6 +6,8 @@
     using System.Linq;
     using System.Windows.Forms;
 
+    using AoBSigmaker;
+
     public partial class Form1 : Form
     {
         #region Constructors and Destructors
@@ -46,61 +48,9 @@
         private void button2_Click(object sender, EventArgs e)
         {
             var patterns = this.richTextBox1.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-            var patternWorking = new List<string>();
-            var lastPattern = new List<string>();
-            foreach (var pattern in patterns)
-            {
-                var loopPattern = pattern.Split(null);
-                for (var i = 0; i < loopPattern.Length; i++)
-                {
-                    if (i + 1 > lastPattern.Count || !lastPattern.Any() || loopPattern[i] == string.Empty)
-                    {
-                        continue;
-                    }
+            
 
-                    if (i + 1 <= patternWorking.Count && patternWorking[i] == "??")
-                    {
-                        continue;
-                    }
-
-                    if (loopPattern[i] == lastPattern[i])
-                    {
-                        if (i + 1 <= patternWorking.Count)
-                        {
-                            patternWorking.RemoveAt(i);
-                            patternWorking.Insert(i, loopPattern[i]);
-                        }
-                        else
-                        {
-                            patternWorking.Add(loopPattern[i]);
-                        }
-                    }
-
-                    if (loopPattern[i] != lastPattern[i] && i + 1 > patternWorking.Count)
-                    {
-                        patternWorking.Add("??");
-                    }
-
-                    if (i + 1 <= patternWorking.Count)
-                    {
-                        if (loopPattern[i] != lastPattern[i] && loopPattern[i] != patternWorking[i])
-                        {
-                            patternWorking.RemoveAt(i);
-                            patternWorking.Insert(i, "??");
-                        }
-                    }
-                }
-
-                lastPattern = loopPattern.ToList();
-            }
-
-            string rtnPattern = null;
-            foreach (var by in patternWorking)
-            {
-                rtnPattern += by + " ";
-            }
-
-            this.richTextBox2.Text = rtnPattern;
+            this.richTextBox2.Text = AoBHandler.GenerateSigFromAoBs(patterns);
         }
 
         private void button3_Click(object sender, EventArgs e)
