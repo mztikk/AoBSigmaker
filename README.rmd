@@ -2,3 +2,12 @@
 
 .NET Framework 4.5.2
 https://www.microsoft.com/en-us/download/details.aspx?id=42643
+
+# Usage
+example:
+
+http://pastebin.com/Rbwatx44
+
+http://puu.sh/pzIw5/0c50aedd28.png
+
+http://puu.sh/pzIx0/d9066c7938.png
