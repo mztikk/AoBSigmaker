@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     internal static class AoBHandler
     {
@@ -24,8 +25,9 @@
                     loopPattern =
                         Enumerable.Range(0, pattern.Length / 2).Select(i => pattern.Substring(i * 2, 2)).ToArray();
                 }*/
-                var replaced = pattern.Replace(" ", string.Empty);
-                replaced = replaced.Replace("\t", string.Empty);
+                /*var replaced = pattern.Replace(" ", string.Empty);
+                replaced = replaced.Replace("\t", string.Empty);*/
+                var replaced = Regex.Replace(pattern, @"\s+", string.Empty);
                 var loopPattern =
                     Enumerable.Range(0, replaced.Length / 2).Select(i => replaced.Substring(i * 2, 2)).ToArray();
 
