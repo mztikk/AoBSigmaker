@@ -48,9 +48,38 @@
         private void button2_Click(object sender, EventArgs e)
         {
             var patterns = this.richTextBox1.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-            
-
-            this.richTextBox2.Text = AoBHandler.GenerateSigFromAoBs(patterns);
+            var result = string.Empty;
+            switch (this.comboBox1.SelectedIndex)
+            {
+                case 0:
+                    result = AoBHandler.GenerateSigFromAoBs(patterns);
+                    break;
+                case 1:
+                    var splitThis = AoBHandler.GenerateSigFromAoBs(patterns).Split(null);
+                    var mask = string.Empty;
+                    foreach (var by in splitThis)
+                    {
+                        if (by == string.Empty)
+                        {
+                            continue;
+                        }
+                        if (by == "??")
+                        {
+                            result += "\\x" + "00";
+                            mask += "?";
+                        }
+                        else
+                        {
+                            result += "\\x" + by;
+                            mask += "x";
+                        }
+                    }
+                    result += Environment.NewLine + mask;
+                    break;
+                default:
+                    break;
+            }
+            this.richTextBox2.Text = result;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -60,6 +89,7 @@
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.comboBox1.SelectedIndex = 0;
         }
 
         #endregion
