@@ -18,12 +18,15 @@
                     continue;
                 }
 
-                var loopPattern = pattern.Split(null);
+                /*var loopPattern = pattern.Split(null);
                 if (loopPattern[0].Length != 2)
                 {
                     loopPattern =
                         Enumerable.Range(0, pattern.Length / 2).Select(i => pattern.Substring(i * 2, 2)).ToArray();
-                }
+                }*/
+                var replaced = pattern.Replace(" ", string.Empty);
+                var loopPattern =
+                    Enumerable.Range(0, replaced.Length / 2).Select(i => replaced.Substring(i * 2, 2)).ToArray();
 
                 for (var i = 0; i < loopPattern.Length; i++)
                 {
