@@ -19,6 +19,12 @@
                 }
 
                 var loopPattern = pattern.Split(null);
+                if (loopPattern[0].Length != 2)
+                {
+                    loopPattern =
+                        Enumerable.Range(0, pattern.Length / 2).Select(i => pattern.Substring(i * 2, 2)).ToArray();
+                }
+
                 for (var i = 0; i < loopPattern.Length; i++)
                 {
                     if (i + 1 > lastPattern.Count || !lastPattern.Any() || loopPattern[i] == string.Empty)
