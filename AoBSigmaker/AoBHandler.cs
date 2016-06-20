@@ -31,7 +31,11 @@
                         continue;
                     }
 
-                    if (loopPattern[i] == lastPattern[i])
+                    var currentByte = loopPattern[i].ToLower();
+                    var lastByte = lastPattern[i].ToLower();
+                    var newByte = i + 1 <= patternWorking.Count ? patternWorking[i] : string.Empty;
+
+                    if (currentByte == lastByte)
                     {
                         if (i + 1 <= patternWorking.Count)
                         {
@@ -44,14 +48,14 @@
                         }
                     }
 
-                    if (loopPattern[i] != lastPattern[i] && i + 1 > patternWorking.Count)
+                    if (currentByte != lastByte && i + 1 > patternWorking.Count)
                     {
                         patternWorking.Add("??");
                     }
 
                     if (i + 1 <= patternWorking.Count)
                     {
-                        if (loopPattern[i] != lastPattern[i] && loopPattern[i] != patternWorking[i])
+                        if (currentByte != lastByte && currentByte != newByte)
                         {
                             patternWorking.RemoveAt(i);
                             patternWorking.Insert(i, "??");
@@ -65,7 +69,7 @@
             string rtnPattern = null;
             foreach (var by in patternWorking)
             {
-                rtnPattern += by + " ";
+                rtnPattern += by.ToUpper() + " ";
             }
 
             return rtnPattern;
