@@ -119,6 +119,7 @@
         private void button4_Click(object sender, EventArgs e)
         {
             var procs = ProcessHandler.GetAllProcesses();
+            this.comboBox2.Items.Clear();
             foreach (var proc in procs)
             {
                 if (proc == null)
@@ -212,6 +213,7 @@
                 }
 
                 var procs = ProcessHandler.GetAllProcesses();
+                this.comboBox2.Items.Clear();
                 foreach (var proc in procs)
                 {
                     if (proc == null)

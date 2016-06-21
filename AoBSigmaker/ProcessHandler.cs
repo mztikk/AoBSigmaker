@@ -20,7 +20,7 @@
         {
             return
                 Process.GetProcesses()
-                    .Where(x => x.ProcessName != "Idle" && x.ProcessName != "System" && IntPtr.Size == 4)
+                    .Where(x => x.ProcessName != "Idle" && x.ProcessName != "System")
                     .OrderBy(x => x.Id)
                     .ToList();
         }
