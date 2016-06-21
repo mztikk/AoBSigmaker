@@ -19,7 +19,7 @@
                  select Regex.Replace(aob, @"\s+", string.Empty)).ToList();
 
             var checkedAoBs =
-                temp.Select(aob => aob.Length > temp[0].Length ? aob.Remove(temp[0].Length - 1) : aob).ToList();
+                temp.Select(aob => aob.Length > temp[0].Length ? aob.Remove(temp[0].Length) : aob).ToList();
 
             foreach (var pattern in checkedAoBs)
             {
