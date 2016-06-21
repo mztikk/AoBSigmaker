@@ -1,5 +1,6 @@
 ﻿namespace AoBSigmaker
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -12,24 +13,18 @@
         {
             var patternWorking = new List<string>();
             var lastPattern = new List<string>();
-            foreach (var pattern in aobs)
-            {
-                if (pattern.StartsWith("##") || pattern == string.Empty)
-                {
-                    continue;
-                }
+            var temp =
+                (from aob in aobs
+                 where !aob.StartsWith("##") && aob != string.Empty
+                 select Regex.Replace(aob, @"\s+", string.Empty)).ToList();
 
-                /*var loopPattern = pattern.Split(null);
-                if (loopPattern[0].Length != 2)
-                {
-                    loopPattern =
-                        Enumerable.Range(0, pattern.Length / 2).Select(i => pattern.Substring(i * 2, 2)).ToArray();
-                }*/
-                /*var replaced = pattern.Replace(" ", string.Empty);
-                replaced = replaced.Replace("\t", string.Empty);*/
-                var replaced = Regex.Replace(pattern, @"\s+", string.Empty);
+            var checkedAoBs =
+                temp.Select(aob => aob.Length > temp[0].Length ? aob.Remove(temp[0].Length - 1) : aob).ToList();
+
+            foreach (var pattern in checkedAoBs)
+            {
                 var loopPattern =
-                    Enumerable.Range(0, replaced.Length / 2).Select(i => replaced.Substring(i * 2, 2)).ToArray();
+                    Enumerable.Range(0, pattern.Length / 2).Select(i => pattern.Substring(i * 2, 2)).ToArray();
 
                 for (var i = 0; i < loopPattern.Length; i++)
                 {
@@ -78,13 +73,41 @@
                 lastPattern = loopPattern.ToList();
             }
 
-            string rtnPattern = null;
-            foreach (var by in patternWorking)
+            return patternWorking.Aggregate<string, string>(null, (current, @by) => current + (@by.ToUpper() + " "));
+        }
+
+        public static byte[] GetBytePattern(string pattern)
+        {
+            return
+                Enumerable.Range(0, pattern.Length)
+                    .Where(x => x % 2 == 0)
+                    .Select(x => Convert.ToByte(pattern.Substring(x, 2), 16))
+                    .ToArray();
+        }
+
+        public static string GetMaskFromPattern(string pattern)
+        {
+            var reg = Regex.Replace(pattern, @"\s+", string.Empty);
+            var splitThis = Enumerable.Range(0, reg.Length / 2).Select(i => reg.Substring(i * 2, 2)).ToArray();
+            var mask = string.Empty;
+            foreach (var by in splitThis)
             {
-                rtnPattern += by.ToUpper() + " ";
+                if (by == string.Empty)
+                {
+                    continue;
+                }
+
+                if (by == "??")
+                {
+                    mask += "?";
+                }
+                else
+                {
+                    mask += "x";
+                }
             }
 
-            return rtnPattern;
+            return mask;
         }
 
         #endregion
