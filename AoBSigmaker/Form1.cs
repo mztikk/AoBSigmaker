@@ -53,6 +53,11 @@
             var patterns = this.richTextBox1.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
             var result = string.Empty;
             var sig = AoBHandler.GenerateSigFromAoBs(patterns);
+            if (string.IsNullOrEmpty(sig))
+            {
+                return;
+            }
+
             if (this.checkBox1.Checked)
             {
                 while (sig.StartsWith("?") || sig.StartsWith(" "))
@@ -193,6 +198,35 @@
         {
             this.comboBox1.SelectedIndex = 0;
             this.comboBox3.SelectedIndex = 0;
+            this.tabControl1.Selected += this.TabSelection;
+        }
+
+        private void TabSelection(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPage.TabIndex == 1)
+            {
+                if (!ProcessHandler.IsAdministrator())
+                {
+                    MessageBox.Show(@"Start Application as Admin");
+                    Application.Exit();
+                }
+
+                var procs = ProcessHandler.GetAllProcesses();
+                foreach (var proc in procs)
+                {
+                    if (proc == null)
+                    {
+                        continue;
+                    }
+
+                    this.comboBox2.Items.Add(proc.ProcessName + "(" + proc.Id + ")");
+                }
+
+                if (procs.Any())
+                {
+                    this.comboBox2.SelectedItem = this.comboBox2.Items[0];
+                }
+            }
         }
 
         #endregion
