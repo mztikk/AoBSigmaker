@@ -1,4 +1,4 @@
-﻿namespace AoBPatternMaker
+﻿namespace AoBSigmaker
 {
     using System;
     using System.Windows.Forms;
@@ -6,6 +6,8 @@
     internal static class Program
     {
         #region Static Fields
+
+        internal static bool IsDebugMode = false;
 
         internal static Form1 Mainform;
 
@@ -19,6 +21,9 @@
         [STAThread]
         private static void Main()
         {
+#if DEBUG
+            IsDebugMode = true;
+#endif
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Mainform = new Form1();

@@ -1,6 +1,5 @@
 ﻿namespace AoBSigmaker
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
@@ -8,12 +7,6 @@
 
     internal static class ProcessHandler
     {
-        #region Static Fields
-
-        internal static Process Proc;
-
-        #endregion
-
         #region Public Methods and Operators
 
         public static List<Process> GetAllProcesses()
@@ -27,7 +20,8 @@
 
         public static bool IsAdministrator()
         {
-            return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
+            return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator)
+                   || Program.IsDebugMode;
         }
 
         #endregion

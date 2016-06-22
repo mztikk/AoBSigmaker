@@ -1,4 +1,4 @@
-﻿namespace AoBPatternMaker
+﻿namespace AoBSigmaker
 {
     using System;
     using System.Diagnostics;
@@ -6,8 +6,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
-
-    using AoBSigmaker;
 
     using Binarysharp.MemoryManagement;
 
@@ -24,7 +22,13 @@
 
         #region Methods
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var aboutform = new AboutForm();
+            aboutform.Show();
+        }
+
+        private void Button1Click(object sender, EventArgs e)
         {
             try
             {
@@ -48,7 +52,7 @@
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2Click(object sender, EventArgs e)
         {
             var patterns = this.richTextBox1.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
             var result = string.Empty;
@@ -107,7 +111,7 @@
             this.richTextBox2.Text = result;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3Click(object sender, EventArgs e)
         {
             var rtn = this.richTextBox2.Text;
             if (!string.IsNullOrEmpty(rtn))
@@ -116,7 +120,7 @@
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void Button4Click(object sender, EventArgs e)
         {
             var procs = ProcessHandler.GetAllProcesses();
             this.comboBox2.Items.Clear();
@@ -136,7 +140,7 @@
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void Button5Click(object sender, EventArgs e)
         {
             var pattern = Regex.Replace(this.richTextBox3.Text, @"\s+", string.Empty).Replace("??", "00");
             if (pattern.Length % 2 != 0 || pattern.ToLower().Except("abcdef0123456789").Any())
@@ -189,14 +193,17 @@
             }
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComboBox2SelectedIndexChanged(object sender, EventArgs e)
         {
             this.richTextBox3.Enabled = true;
             this.button5.Enabled = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void Form1Load(object sender, EventArgs e)
         {
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+
             this.comboBox1.SelectedIndex = 0;
             this.comboBox3.SelectedIndex = 0;
             this.tabControl1.Selected += this.TabSelection;
@@ -208,8 +215,13 @@
             {
                 if (!ProcessHandler.IsAdministrator())
                 {
-                    MessageBox.Show(@"Start Application as Admin");
-                    Application.Exit();
+                    if (MessageBox.Show(
+                        @"Please restart this Application as Admin", 
+                        @"Elevated Permissions", 
+                        MessageBoxButtons.OKCancel) == DialogResult.OK)
+                    {
+                        Application.Exit();
+                    }
                 }
 
                 var procs = ProcessHandler.GetAllProcesses();
