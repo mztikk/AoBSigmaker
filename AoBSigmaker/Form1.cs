@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -104,8 +105,6 @@
 
                     result += Environment.NewLine + mask;
                     break;
-                default:
-                    break;
             }
 
             this.richTextBox2.Text = result;
@@ -154,12 +153,8 @@
             var procidstring = split[1].Remove(split[1].Length - 1);
             var procId = int.Parse(procidstring);
             var proc = Process.GetProcessById(procId);
-            var sigscan = new SigScan(proc, proc.MainModule.BaseAddress, proc.MainModule.ModuleMemorySize);
-
-            var addr = sigscan.FindPattern(
-                AoBHandler.GetBytePattern(pattern), 
-                AoBHandler.GetMaskFromPattern(pattern), 
-                0);
+            var sigscan = new AoBHandler(proc, proc.MainModule.BaseAddress, proc.MainModule.ModuleMemorySize);
+            var addr = sigscan.FindPattern(pattern);
             this.richTextBox4.Text = addr.ToString("X");
             if (addr == (IntPtr)0) return;
             var memsharp = new MemorySharp(proc);
@@ -177,18 +172,16 @@
                     this.richTextBox5.Text = memsharp.Read<uint>(addr, false).ToString();
                     break;
                 case 4:
-                    this.richTextBox5.Text = memsharp.Read<float>(addr, false).ToString();
+                    this.richTextBox5.Text = memsharp.Read<float>(addr, false).ToString(CultureInfo.InvariantCulture);
                     break;
                 case 5:
-                    this.richTextBox5.Text = memsharp.Read<double>(addr, false).ToString();
+                    this.richTextBox5.Text = memsharp.Read<double>(addr, false).ToString(CultureInfo.InvariantCulture);
                     break;
                 case 6:
                     this.richTextBox5.Text = memsharp.ReadString(addr, false);
                     break;
                 case 7:
                     this.richTextBox5.Text = memsharp.Read<IntPtr>(addr, false).ToString("X");
-                    break;
-                default:
                     break;
             }
         }
@@ -224,22 +217,7 @@
                     }
                 }
 
-                var procs = ProcessHandler.GetAllProcesses();
-                this.comboBox2.Items.Clear();
-                foreach (var proc in procs)
-                {
-                    if (proc == null)
-                    {
-                        continue;
-                    }
-
-                    this.comboBox2.Items.Add(proc.ProcessName + "(" + proc.Id + ")");
-                }
-
-                if (procs.Any())
-                {
-                    this.comboBox2.SelectedItem = this.comboBox2.Items[0];
-                }
+                this.Button4Click(new object(), new EventArgs());
             }
         }
 

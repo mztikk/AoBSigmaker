@@ -101,7 +101,6 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AoBHandler.cs" />
-    <Compile Include="AoBScanner.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
