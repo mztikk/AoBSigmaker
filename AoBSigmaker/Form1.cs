@@ -23,7 +23,7 @@
 
         #region Methods
 
-        private void AboutToolStripMenuItemClick(object sender, EventArgs e)
+        private void AboutToolStripMenuItem1Click(object sender, EventArgs e)
         {
             var aboutform = new AboutForm();
             aboutform.Show();
@@ -56,10 +56,11 @@
         private void Button2Click(object sender, EventArgs e)
         {
             var patterns = this.richTextBox1.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-            var result = string.Empty;
             var sig = AoBHandler.GenerateSigFromAoBs(patterns);
+
             if (string.IsNullOrEmpty(sig))
             {
+                this.richTextBox2.Text = @"Invalid AoB Pattern";
                 return;
             }
 
@@ -76,6 +77,7 @@
                 }
             }
 
+            var result = string.Empty;
             switch (this.comboBox1.SelectedIndex)
             {
                 case 0:
@@ -154,7 +156,7 @@
             var procId = int.Parse(procidstring);
             var proc = Process.GetProcessById(procId);
             var sigscan = new AoBHandler(proc, proc.MainModule.BaseAddress, proc.MainModule.ModuleMemorySize);
-            var addr = sigscan.FindPattern(pattern);
+            var addr = sigscan.FindPattern(pattern, 0);
             this.richTextBox4.Text = addr.ToString("X");
             if (addr == (IntPtr)0) return;
             var memsharp = new MemorySharp(proc);
@@ -184,6 +186,12 @@
                     this.richTextBox5.Text = memsharp.Read<IntPtr>(addr, false).ToString("X");
                     break;
             }
+        }
+
+        private void CheckForUpdateToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var updtform = new UpdateForm();
+            updtform.Show();
         }
 
         private void ComboBox2SelectedIndexChanged(object sender, EventArgs e)

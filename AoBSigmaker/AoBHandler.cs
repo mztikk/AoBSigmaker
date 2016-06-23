@@ -10,7 +10,6 @@
  *      take credit for converting it to C#. 
  * 
  */
-
 namespace AoBSigmaker
 {
     using System;
@@ -19,6 +18,7 @@ namespace AoBSigmaker
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
+    using System.Windows.Forms;
 
     public class AoBHandler
     {
@@ -114,59 +114,13 @@ namespace AoBSigmaker
 
         #region Public Methods and Operators
 
-        /// <summary>
-        ///     FindPattern
-        ///     Attempts to locate the given pattern inside the dumped memory region
-        ///     compared against the given mask. If the pattern is found, the offset
-        ///     is added to the located address and returned to the user.
-        /// </summary>
-        /// <param name="btPattern">Byte pattern to look for in the dumped region.</param>
-        /// <param name="strMask">The mask string to compare against.</param>
-        /// <param name="nOffset">The offset added to the result address.</param>
-        /// <returns>IntPtr - zero if not found, address if found.</returns>
-        public IntPtr FindPattern(byte[] btPattern, string strMask, int nOffset)
-        {
-            try
-            {
-                // Dump the memory region if we have not dumped it yet. 
-                if (this.mVDumpedRegion == null || this.mVDumpedRegion.Length == 0)
-                {
-                    if (!this.DumpMemory()) return IntPtr.Zero;
-                }
-
-                // Ensure the mask and pattern lengths match. 
-                if (strMask.Length != btPattern.Length) return IntPtr.Zero;
-
-                // Loop the region and look for the pattern. 
-                for (var x = 0; x < this.mVDumpedRegion.Length; x++)
-                {
-                    if (this.MaskCheck(x, btPattern, strMask))
-                    {
-                        // The pattern was found, return it. 
-                        return new IntPtr((int)this.mVAddress + (x + nOffset));
-                    }
-                }
-
-                // Pattern was not found. 
-                return IntPtr.Zero;
-            }
-            catch (Exception)
-            {
-                return IntPtr.Zero;
-            }
-        }
-
-        public IntPtr FindPattern(string pattern)
-        {
-            var sig = pattern;
-            var byteSig = GetBytePattern(sig);
-            var byteMask = GetMaskFromPattern(sig);
-
-            return this.FindPattern(byteSig, byteMask, 0);
-        }
-
         public static string GenerateSigFromAoBs(string[] aobs)
         {
+            if (aobs.Length <= 1)
+            {
+                return aobs[0].ToUpper();
+            }
+
             var patternWorking = new List<string>();
             var lastPattern = new List<string>();
             var temp =
@@ -176,9 +130,18 @@ namespace AoBSigmaker
 
             var checkedAoBs =
                 temp.Select(aob => aob.Length > temp[0].Length ? aob.Remove(temp[0].Length) : aob).ToList();
+            if (checkedAoBs.Count <= 1)
+            {
+                return checkedAoBs[0].ToUpper();
+            }
 
             foreach (var pattern in checkedAoBs)
             {
+                if (pattern.Length % 2 != 0 || pattern.ToLower().Except("abcdef0123456789").Any())
+                {
+                    return null;
+                }
+
                 var loopPattern =
                     Enumerable.Range(0, pattern.Length / 2).Select(i => pattern.Substring(i * 2, 2)).ToArray();
 
@@ -268,6 +231,57 @@ namespace AoBSigmaker
         }
 
         /// <summary>
+        ///     FindPattern
+        ///     Attempts to locate the given pattern inside the dumped memory region
+        ///     compared against the given mask. If the pattern is found, the offset
+        ///     is added to the located address and returned to the user.
+        /// </summary>
+        /// <param name="btPattern">Byte pattern to look for in the dumped region.</param>
+        /// <param name="strMask">The mask string to compare against.</param>
+        /// <param name="nOffset">The offset added to the result address.</param>
+        /// <returns>IntPtr - zero if not found, address if found.</returns>
+        public IntPtr FindPattern(byte[] btPattern, string strMask, int nOffset)
+        {
+            try
+            {
+                // Dump the memory region if we have not dumped it yet. 
+                if (this.mVDumpedRegion == null || this.mVDumpedRegion.Length == 0)
+                {
+                    if (!this.DumpMemory()) return IntPtr.Zero;
+                }
+
+                // Ensure the mask and pattern lengths match. 
+                if (strMask.Length != btPattern.Length) return IntPtr.Zero;
+
+                // Loop the region and look for the pattern. 
+                for (var x = 0; x < this.mVDumpedRegion.Length; x++)
+                {
+                    if (this.MaskCheck(x, btPattern, strMask))
+                    {
+                        // The pattern was found, return it. 
+                        return new IntPtr((int)this.mVAddress + (x + nOffset));
+                    }
+                }
+
+                // Pattern was not found. 
+                return IntPtr.Zero;
+            }
+            catch (Exception)
+            {
+                return IntPtr.Zero;
+            }
+        }
+
+        public IntPtr FindPattern(string pattern, int nOffset)
+        {
+            var sig = pattern;
+            var byteSig = GetBytePattern(sig);
+            var byteMask = GetMaskFromPattern(sig);
+
+            return this.FindPattern(byteSig, byteMask, nOffset);
+        }
+
+        /// <summary>
         ///     ResetRegion
         ///     Resets the memory dump array to nothing to allow
         ///     the class to redump the memory.
@@ -293,10 +307,10 @@ namespace AoBSigmaker
         /// <returns></returns>
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool ReadProcessMemory(
-            IntPtr hProcess,
-            IntPtr lpBaseAddress,
-            [Out] byte[] lpBuffer,
-            int dwSize,
+            IntPtr hProcess, 
+            IntPtr lpBaseAddress, 
+            [Out] byte[] lpBuffer, 
+            int dwSize, 
             out int lpNumberOfBytesRead);
 
         /// <summary>
@@ -322,10 +336,10 @@ namespace AoBSigmaker
 
                 // Dump the memory. 
                 var ret = ReadProcessMemory(
-                    this.mVProcess.Handle,
-                    this.mVAddress,
-                    this.mVDumpedRegion,
-                    this.mVSize,
+                    this.mVProcess.Handle, 
+                    this.mVAddress, 
+                    this.mVDumpedRegion, 
+                    this.mVSize, 
                     out nBytesRead);
 
                 // Validation checks. 
