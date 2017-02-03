@@ -1,10 +1,8 @@
 ﻿namespace AoBSigmaker
 {
-    using System;
     using System.Net;
     using System.Reflection;
     using System.Text.RegularExpressions;
-    using System.Windows.Forms;
 
     internal static class UpdateHandler
     {
@@ -18,8 +16,7 @@
         internal static string GetGithubVersion(string githubInfo)
         {
             var wc = new WebClient();
-            var webData =
-                wc.DownloadString(githubInfo);
+            var webData = wc.DownloadString(githubInfo);
             var reg = Regex.Match(webData, @"n\(""\d.\d.\d.\d");
             var version = reg.Value.Remove(0, 3);
             return version;

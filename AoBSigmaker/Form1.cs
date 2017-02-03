@@ -1,14 +1,19 @@
 ﻿namespace AoBSigmaker
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Text.RegularExpressions;
+    using System.Text;
     using System.Windows.Forms;
 
-    using Binarysharp.MemoryManagement;
+    using AoBSigmaker.Helpers;
+
+    using Process.NET;
+    using Process.NET.Memory;
+    using Process.NET.Patterns;
 
     public partial class Form1 : Form
     {
@@ -29,56 +34,51 @@
             aboutform.Show();
         }
 
-        private void Button1Click(object sender, EventArgs e)
+        private void button_copycb_Click(object sender, EventArgs e)
         {
-            try
+            var rtn = this.richTextBox_result.Text;
+            if (!string.IsNullOrEmpty(rtn))
             {
-                var fDialog = new OpenFileDialog
-                                  {
-                                     Title = @"Open Text File", Filter = @"TXT files|*.txt", InitialDirectory = @"C:\" 
-                                  };
-                if (fDialog.ShowDialog() != DialogResult.OK) return;
-
-                this.richTextBox1.Text = string.Empty;
-                var lines = File.ReadAllLines(fDialog.FileName);
-                for (var i = 0; i < lines.Length; i++)
-                {
-                    this.richTextBox1.Text += lines[i];
-                    this.richTextBox1.Text += Environment.NewLine;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(@"Could not read file from disk. Error:" + Environment.NewLine + ex.Message);
+                Clipboard.SetText(rtn);
             }
         }
 
-        private void Button2Click(object sender, EventArgs e)
+        private void button_gensig_Click(object sender, EventArgs e)
         {
-            var patterns = this.richTextBox1.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-            var sig = AoBHandler.GenerateSigFromAoBs(patterns);
+            var patterns = this.richTextBox_input.Text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (var index = 0; index < patterns.Length; index++)
+            {
+                var pattern = patterns[index];
+                if (AoBHelper.IsValid(pattern))
+                {
+                    continue;
+                }
+                this.richTextBox_result.Text = @"Invalid AoB Pattern";
+                return;
+            }
+            var sig = AoBHelper.GenerateSigFromAobs(patterns, this.checkBox_halfbyte.Checked);
 
             if (string.IsNullOrEmpty(sig))
             {
-                this.richTextBox2.Text = @"Invalid AoB Pattern";
+                this.richTextBox_result.Text = @"Invalid AoB Pattern";
                 return;
             }
 
-            if (this.checkBox1.Checked)
+            if (this.checkBox_shorten.Checked)
             {
                 while (sig.StartsWith("?") || sig.StartsWith(" "))
                 {
-                    sig = sig.TrimStart(new[] { '?', ' ' });
+                    sig = sig.TrimStart('?', ' ');
                 }
 
                 while (sig.EndsWith("?") || sig.EndsWith(" "))
                 {
-                    sig = sig.TrimEnd(new[] { '?', ' ' });
+                    sig = sig.TrimEnd('?', ' ');
                 }
             }
 
             var result = string.Empty;
-            switch (this.comboBox1.SelectedIndex)
+            switch (this.comboBox_returnstyle.SelectedIndex)
             {
                 case 0:
                     result = sig;
@@ -109,82 +109,151 @@
                     break;
             }
 
-            this.richTextBox2.Text = result;
+            this.richTextBox_result.Text = result;
         }
 
-        private void Button3Click(object sender, EventArgs e)
+        private void button_loadfile_Click(object sender, EventArgs e)
         {
-            var rtn = this.richTextBox2.Text;
-            if (!string.IsNullOrEmpty(rtn))
+            try
             {
-                Clipboard.SetText(rtn);
+                var fDialog = new OpenFileDialog
+                                  {
+                                      Title = @"Open Text File", Filter = @"TXT files|*.txt",
+                                      InitialDirectory = @"C:\"
+                                  };
+                if (fDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                this.richTextBox_input.Text = string.Empty;
+                var lines = File.ReadAllLines(fDialog.FileName);
+                var str = new StringBuilder();
+                for (var i = 0; i < lines.Length; i++)
+                {
+                    str.Append(lines[i]);
+                    str.Append(Environment.NewLine);
+                }
+                this.richTextBox_input.Text = str.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(@"Could not read file from disk. Error:" + Environment.NewLine + ex.Message);
             }
         }
 
-        private void Button4Click(object sender, EventArgs e)
+        private void button_procrefresh_Click(object sender, EventArgs e)
         {
-            var procs = ProcessHandler.GetAllProcesses();
-            this.comboBox2.Items.Clear();
-            foreach (var proc in procs)
+            var procs = new List<Process>();
+            foreach (var process in Process.GetProcesses())
+            {
+                try
+                {
+                    var temptest = new ProcessSharp(process, MemoryType.Remote);
+                    procs.Add(process);
+                }
+                catch (Exception)
+                {
+                }
+            }
+            this.comboBox_procs.Items.Clear();
+            foreach (var proc in procs.OrderBy(x => x.StartTime.ToUniversalTime()))
             {
                 if (proc == null)
                 {
                     continue;
                 }
 
-                this.comboBox2.Items.Add(proc.ProcessName + "(" + proc.Id + ")");
+                this.comboBox_procs.Items.Add(proc.ProcessName + "(" + proc.Id + ")");
             }
 
             if (procs.Any())
             {
-                this.comboBox2.SelectedItem = this.comboBox2.Items[0];
+                this.comboBox_procs.SelectedItem = this.comboBox_procs.Items[0];
             }
         }
 
-        private void Button5Click(object sender, EventArgs e)
+        private void button_readaobaddress_Click(object sender, EventArgs e)
         {
-            var pattern = Regex.Replace(this.richTextBox3.Text, @"\s+", string.Empty).Replace("??", "00");
-            if (pattern.Length % 2 != 0 || pattern.ToLower().Except("abcdef0123456789").Any())
+            var aobsig = this.richTextBox_aobinput.Text;
+            if (string.IsNullOrEmpty(aobsig) || string.IsNullOrWhiteSpace(aobsig) || !AoBHelper.IsValid(aobsig))
             {
-                this.richTextBox4.Text = @"Invalid AoB Pattern";
-                this.richTextBox5.Text = string.Empty;
+                this.richTextBox_aobaddress.Text = @"Pattern not valid";
                 return;
             }
 
-            var split = this.comboBox2.Text.Split(new[] { "(" }, StringSplitOptions.None);
+            var split = this.comboBox_procs.Text.Split(new[] { "(" }, StringSplitOptions.None);
             var procidstring = split[1].Remove(split[1].Length - 1);
             var procId = int.Parse(procidstring);
-            var proc = Process.GetProcessById(procId);
-            var sigscan = new AoBHandler(proc, proc.MainModule.BaseAddress, proc.MainModule.ModuleMemorySize);
-            var addr = sigscan.FindPattern(pattern, 0);
-            this.richTextBox4.Text = addr.ToString("X");
-            if (addr == (IntPtr)0) return;
-            var memsharp = new MemorySharp(proc);
-            switch (this.comboBox3.SelectedIndex)
+            Process proc;
+            try
             {
-                case 0:
-                    break;
-                case 1:
-                    this.richTextBox5.Text = memsharp.Read<byte>(addr, false).ToString();
-                    break;
-                case 2:
-                    this.richTextBox5.Text = memsharp.Read<ushort>(addr, false).ToString();
-                    break;
-                case 3:
-                    this.richTextBox5.Text = memsharp.Read<uint>(addr, false).ToString();
-                    break;
-                case 4:
-                    this.richTextBox5.Text = memsharp.Read<float>(addr, false).ToString(CultureInfo.InvariantCulture);
-                    break;
-                case 5:
-                    this.richTextBox5.Text = memsharp.Read<double>(addr, false).ToString(CultureInfo.InvariantCulture);
-                    break;
-                case 6:
-                    this.richTextBox5.Text = memsharp.ReadString(addr, false);
-                    break;
-                case 7:
-                    this.richTextBox5.Text = memsharp.Read<IntPtr>(addr, false).ToString("X");
-                    break;
+                proc = Process.GetProcessById(procId);
+            }
+            catch (Exception)
+            {
+                this.richTextBox_aobaddress.Text = @"Process not valid";
+                return;
+            }
+
+            var procsharp = new ProcessSharp(proc, MemoryType.Remote);
+            var sigscan = new PatternScanner(procsharp.ModuleFactory.MainModule);
+            var sigres = sigscan.Find(new DwordPattern(aobsig));
+            if (sigres.Found)
+            {
+                this.richTextBox_aobaddress.Text = sigres.ReadAddress.ToString("X");
+                switch (this.comboBox_readtype.SelectedIndex)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        this.richTextBox_aobaddressvalue.Text =
+                            procsharp.Memory.Read<byte>(sigres.ReadAddress).ToString();
+                        break;
+                    case 2:
+                        this.richTextBox_aobaddressvalue.Text =
+                            procsharp.Memory.Read<ushort>(sigres.ReadAddress).ToString();
+                        break;
+                    case 3:
+                        this.richTextBox_aobaddressvalue.Text =
+                            procsharp.Memory.Read<uint>(sigres.ReadAddress).ToString();
+                        break;
+                    case 4:
+                        this.richTextBox_aobaddressvalue.Text =
+                            procsharp.Memory.Read<float>(sigres.ReadAddress).ToString(CultureInfo.InvariantCulture);
+                        break;
+                    case 5:
+                        this.richTextBox_aobaddressvalue.Text =
+                            procsharp.Memory.Read<double>(sigres.ReadAddress).ToString(CultureInfo.InvariantCulture);
+                        break;
+                    case 6:
+                        this.richTextBox_aobaddressvalue.Text = procsharp.Memory.Read(
+                            sigres.ReadAddress,
+                            Encoding.ASCII,
+                            50);
+                        break;
+                    case 7:
+                        this.richTextBox_aobaddressvalue.Text =
+                            procsharp.Memory.Read<IntPtr>(sigres.ReadAddress).ToString("X");
+                        break;
+                }
+            }
+            else
+            {
+                this.richTextBox_aobaddress.Text = @"Couldn't find the pattern";
+            }
+        }
+
+        private void checkBox_halfbyte_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.checkBox_halfbyte.Checked)
+            {
+                this.comboBox_returnstyle.SelectedIndex = 0;
+                this.comboBox_returnstyle.Items.RemoveAt(1);
+            }
+            else
+            {
+                this.comboBox_returnstyle.Items.Add("C++");
             }
         }
 
@@ -194,10 +263,14 @@
             updtform.Show();
         }
 
-        private void ComboBox2SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBox_procs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.richTextBox3.Enabled = true;
-            this.button5.Enabled = true;
+            this.richTextBox_aobinput.Enabled = true;
+            this.button_readaobaddress.Enabled = true;
+        }
+
+        private void comboBox_returnstyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
 
         private void Form1Load(object sender, EventArgs e)
@@ -205,8 +278,8 @@
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
-            this.comboBox1.SelectedIndex = 0;
-            this.comboBox3.SelectedIndex = 0;
+            this.comboBox_returnstyle.SelectedIndex = 0;
+            this.comboBox_readtype.SelectedIndex = 0;
             this.tabControl1.Selected += this.TabSelection;
         }
 
@@ -214,18 +287,21 @@
         {
             if (e.TabPage.TabIndex == 1)
             {
-                if (!ProcessHandler.IsAdministrator())
+                if (!SystemHelper.IsAdministrator())
                 {
                     if (MessageBox.Show(
-                        @"Please restart this Application as Admin", 
-                        @"Elevated Permissions", 
-                        MessageBoxButtons.OKCancel) == DialogResult.OK)
+                            @"Please restart this Application as Admin",
+                            @"Elevated Permissions",
+                            MessageBoxButtons.OKCancel) == DialogResult.OK)
                     {
                         Application.Exit();
                     }
                 }
 
-                this.Button4Click(new object(), new EventArgs());
+                if (this.comboBox_procs.Items.Count < 1)
+                {
+                    this.button_procrefresh_Click(this.button_procrefresh, new EventArgs());
+                }
             }
         }
 

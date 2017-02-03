@@ -7,7 +7,7 @@
     {
         #region Static Fields
 
-        internal static bool IsDebugMode = false;
+        internal static bool IsDebugMode;
 
         internal static Form1 Mainform;
 
