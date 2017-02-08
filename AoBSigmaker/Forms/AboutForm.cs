@@ -22,7 +22,7 @@
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
 
-            this.versionLabel.Text = UpdateHandler.GetAssemblyVersion();
+            this.versionLabel.Text = Updater.GetAssemblyVersion();
         }
 
         private void LinkLabel1LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -5,11 +5,11 @@
 
     internal static class Program
     {
-        #region Static Fields
+        #region Properties
 
-        internal static bool IsDebugMode;
+        internal static bool IsDebugMode { get; set; }
 
-        internal static Form1 Mainform;
+        internal static Mainform Mainform { get; set; }
 
         #endregion
 
@@ -26,7 +26,7 @@
 #endif
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Mainform = new Form1();
+            Mainform = new Mainform();
             Application.Run(Mainform);
         }
 

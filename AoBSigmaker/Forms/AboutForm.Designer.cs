@@ -104,7 +104,8 @@
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
             this.Name = "AboutForm";
-            this.Text = "AboutForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "About";
             this.Load += new System.EventHandler(this.AboutFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();

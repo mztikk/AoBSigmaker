@@ -22,5 +22,41 @@ namespace AoBSigmaker.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TrustValidity {
+            get {
+                return ((bool)(this["TrustValidity"]));
+            }
+            set {
+                this["TrustValidity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CheckForUpdateOnStartup {
+            get {
+                return ((bool)(this["CheckForUpdateOnStartup"]));
+            }
+            set {
+                this["CheckForUpdateOnStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("FullCopy")]
+        public global::AoBSigmaker.FileReadMode FileReadMode {
+            get {
+                return ((global::AoBSigmaker.FileReadMode)(this["FileReadMode"]));
+            }
+            set {
+                this["FileReadMode"] = value;
+            }
+        }
     }
 }

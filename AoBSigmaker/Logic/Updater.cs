@@ -4,8 +4,15 @@
     using System.Reflection;
     using System.Text.RegularExpressions;
 
-    internal static class UpdateHandler
+    internal static class Updater
     {
+        #region Properties
+
+        internal static string GithubLink { get; } =
+            "https://raw.githubusercontent.com/mztikk/AoBSigmaker/master/AoBSigmaker/Properties/AssemblyInfo.cs";
+
+        #endregion
+
         #region Methods
 
         internal static string GetAssemblyVersion()
@@ -22,11 +29,21 @@
             return version;
         }
 
+        internal static string GetGithubVersion()
+        {
+            return GetGithubVersion(GithubLink);
+        }
+
         internal static bool IsOnlineDiff(string githubInfo)
         {
             var currVersion = GetAssemblyVersion();
             var githubVersion = GetGithubVersion(githubInfo);
             return currVersion != githubVersion;
+        }
+
+        internal static bool IsOnlineDiff()
+        {
+            return IsOnlineDiff(GithubLink);
         }
 
         #endregion

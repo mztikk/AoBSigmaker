@@ -82,7 +82,8 @@
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.updateInfo);
             this.Name = "UpdateForm";
-            this.Text = "UpdateForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Update";
             this.Load += new System.EventHandler(this.UpdateFormLoad);
             this.ResumeLayout(false);
             this.PerformLayout();

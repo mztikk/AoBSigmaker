@@ -1,6 +1,6 @@
 ﻿namespace AoBSigmaker
 {
-    partial class Form1
+    partial class Mainform
     {
         /// <summary>
         /// Required designer variable.
@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.richTextBox_input = new System.Windows.Forms.RichTextBox();
+            this.textBox_input = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_loadfile = new System.Windows.Forms.Button();
             this.button_gensig = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.richTextBox_result = new System.Windows.Forms.RichTextBox();
+            this.textBox_result = new System.Windows.Forms.TextBox();
             this.button_copycb = new System.Windows.Forms.Button();
             this.comboBox_returnstyle = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,13 +43,13 @@
             this.checkBox_shorten = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
-            this.richTextBox_aobaddressvalue = new System.Windows.Forms.RichTextBox();
+            this.textBox_aobaddressvalue = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox_readtype = new System.Windows.Forms.ComboBox();
-            this.richTextBox_aobaddress = new System.Windows.Forms.RichTextBox();
+            this.textBox_aobaddress = new System.Windows.Forms.TextBox();
             this.button_readaobaddress = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.richTextBox_aobinput = new System.Windows.Forms.RichTextBox();
+            this.textBox_aobinput = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.button_procrefresh = new System.Windows.Forms.Button();
             this.comboBox_procs = new System.Windows.Forms.ComboBox();
@@ -58,21 +58,22 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.checkForUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // richTextBox_input
+            // textBox_input
             // 
-            this.richTextBox_input.Location = new System.Drawing.Point(6, 19);
-            this.richTextBox_input.Name = "richTextBox_input";
-            this.richTextBox_input.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.richTextBox_input.Size = new System.Drawing.Size(495, 96);
-            this.richTextBox_input.TabIndex = 0;
-            this.richTextBox_input.Text = "";
-            this.richTextBox_input.WordWrap = false;
+            this.textBox_input.Location = new System.Drawing.Point(6, 19);
+            this.textBox_input.Multiline = true;
+            this.textBox_input.Name = "textBox_input";
+            this.textBox_input.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox_input.Size = new System.Drawing.Size(495, 96);
+            this.textBox_input.TabIndex = 0;
+            this.textBox_input.WordWrap = false;
             // 
             // label1
             // 
@@ -92,7 +93,7 @@
             this.button_loadfile.TabIndex = 2;
             this.button_loadfile.Text = "Load from File";
             this.button_loadfile.UseVisualStyleBackColor = true;
-            this.button_loadfile.Click += new System.EventHandler(this.button_loadfile_Click);
+            this.button_loadfile.Click += new System.EventHandler(this.Button_Loadfile_Click);
             // 
             // button_gensig
             // 
@@ -102,7 +103,7 @@
             this.button_gensig.TabIndex = 3;
             this.button_gensig.Text = "Generate Sig";
             this.button_gensig.UseVisualStyleBackColor = true;
-            this.button_gensig.Click += new System.EventHandler(this.button_gensig_Click);
+            this.button_gensig.Click += new System.EventHandler(this.Button_GenSig_Click);
             // 
             // label2
             // 
@@ -113,16 +114,16 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Result:";
             // 
-            // richTextBox_result
+            // textBox_result
             // 
-            this.richTextBox_result.Location = new System.Drawing.Point(9, 147);
-            this.richTextBox_result.Name = "richTextBox_result";
-            this.richTextBox_result.ReadOnly = true;
-            this.richTextBox_result.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.richTextBox_result.Size = new System.Drawing.Size(492, 72);
-            this.richTextBox_result.TabIndex = 5;
-            this.richTextBox_result.Text = "";
-            this.richTextBox_result.WordWrap = false;
+            this.textBox_result.Location = new System.Drawing.Point(9, 147);
+            this.textBox_result.Multiline = true;
+            this.textBox_result.Name = "textBox_result";
+            this.textBox_result.ReadOnly = true;
+            this.textBox_result.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox_result.Size = new System.Drawing.Size(492, 72);
+            this.textBox_result.TabIndex = 5;
+            this.textBox_result.WordWrap = false;
             // 
             // button_copycb
             // 
@@ -132,7 +133,7 @@
             this.button_copycb.TabIndex = 6;
             this.button_copycb.Text = "Copy to Clipboard";
             this.button_copycb.UseVisualStyleBackColor = true;
-            this.button_copycb.Click += new System.EventHandler(this.button_copycb_Click);
+            this.button_copycb.Click += new System.EventHandler(this.Button_Copycb_Click);
             // 
             // comboBox_returnstyle
             // 
@@ -145,7 +146,7 @@
             this.comboBox_returnstyle.Name = "comboBox_returnstyle";
             this.comboBox_returnstyle.Size = new System.Drawing.Size(112, 21);
             this.comboBox_returnstyle.TabIndex = 7;
-            this.comboBox_returnstyle.SelectedIndexChanged += new System.EventHandler(this.comboBox_returnstyle_SelectedIndexChanged);
+            this.comboBox_returnstyle.SelectedIndexChanged += new System.EventHandler(this.ComboBox_Returnstyle_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -166,9 +167,10 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(601, 259);
+            this.tabControl1.Size = new System.Drawing.Size(604, 257);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 9;
+            this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabSelection);
             // 
             // tabPage1
             // 
@@ -178,15 +180,15 @@
             this.tabPage1.Controls.Add(this.button_copycb);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.comboBox_returnstyle);
-            this.tabPage1.Controls.Add(this.richTextBox_result);
+            this.tabPage1.Controls.Add(this.textBox_result);
             this.tabPage1.Controls.Add(this.button_gensig);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.richTextBox_input);
+            this.tabPage1.Controls.Add(this.textBox_input);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(593, 233);
+            this.tabPage1.Size = new System.Drawing.Size(596, 231);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Sigmaker";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -200,7 +202,7 @@
             this.checkBox_halfbyte.TabIndex = 10;
             this.checkBox_halfbyte.Text = "Halfbyte Masking";
             this.checkBox_halfbyte.UseVisualStyleBackColor = true;
-            this.checkBox_halfbyte.CheckedChanged += new System.EventHandler(this.checkBox_halfbyte_CheckedChanged);
+            this.checkBox_halfbyte.CheckedChanged += new System.EventHandler(this.CheckBox_Halfbyte_CheckedChanged);
             // 
             // checkBox_shorten
             // 
@@ -215,13 +217,13 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.richTextBox_aobaddressvalue);
+            this.tabPage2.Controls.Add(this.textBox_aobaddressvalue);
             this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.comboBox_readtype);
-            this.tabPage2.Controls.Add(this.richTextBox_aobaddress);
+            this.tabPage2.Controls.Add(this.textBox_aobaddress);
             this.tabPage2.Controls.Add(this.button_readaobaddress);
             this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.richTextBox_aobinput);
+            this.tabPage2.Controls.Add(this.textBox_aobinput);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.button_procrefresh);
             this.tabPage2.Controls.Add(this.comboBox_procs);
@@ -229,7 +231,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(593, 233);
+            this.tabPage2.Size = new System.Drawing.Size(596, 231);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "AoB Scan";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -243,15 +245,14 @@
             this.label8.TabIndex = 11;
             this.label8.Text = "Value:";
             // 
-            // richTextBox_aobaddressvalue
+            // textBox_aobaddressvalue
             // 
-            this.richTextBox_aobaddressvalue.Location = new System.Drawing.Point(204, 156);
-            this.richTextBox_aobaddressvalue.Name = "richTextBox_aobaddressvalue";
-            this.richTextBox_aobaddressvalue.ReadOnly = true;
-            this.richTextBox_aobaddressvalue.Size = new System.Drawing.Size(145, 27);
-            this.richTextBox_aobaddressvalue.TabIndex = 10;
-            this.richTextBox_aobaddressvalue.Text = "";
-            this.richTextBox_aobaddressvalue.WordWrap = false;
+            this.textBox_aobaddressvalue.Location = new System.Drawing.Point(204, 156);
+            this.textBox_aobaddressvalue.Name = "textBox_aobaddressvalue";
+            this.textBox_aobaddressvalue.ReadOnly = true;
+            this.textBox_aobaddressvalue.Size = new System.Drawing.Size(145, 20);
+            this.textBox_aobaddressvalue.TabIndex = 10;
+            this.textBox_aobaddressvalue.WordWrap = false;
             // 
             // label7
             // 
@@ -280,15 +281,14 @@
             this.comboBox_readtype.Size = new System.Drawing.Size(137, 21);
             this.comboBox_readtype.TabIndex = 8;
             // 
-            // richTextBox_aobaddress
+            // textBox_aobaddress
             // 
-            this.richTextBox_aobaddress.Location = new System.Drawing.Point(204, 123);
-            this.richTextBox_aobaddress.Name = "richTextBox_aobaddress";
-            this.richTextBox_aobaddress.ReadOnly = true;
-            this.richTextBox_aobaddress.Size = new System.Drawing.Size(145, 27);
-            this.richTextBox_aobaddress.TabIndex = 7;
-            this.richTextBox_aobaddress.Text = "";
-            this.richTextBox_aobaddress.WordWrap = false;
+            this.textBox_aobaddress.Location = new System.Drawing.Point(204, 123);
+            this.textBox_aobaddress.Name = "textBox_aobaddress";
+            this.textBox_aobaddress.ReadOnly = true;
+            this.textBox_aobaddress.Size = new System.Drawing.Size(145, 20);
+            this.textBox_aobaddress.TabIndex = 7;
+            this.textBox_aobaddress.WordWrap = false;
             // 
             // button_readaobaddress
             // 
@@ -299,7 +299,7 @@
             this.button_readaobaddress.TabIndex = 6;
             this.button_readaobaddress.Text = "Read";
             this.button_readaobaddress.UseVisualStyleBackColor = true;
-            this.button_readaobaddress.Click += new System.EventHandler(this.button_readaobaddress_Click);
+            this.button_readaobaddress.Click += new System.EventHandler(this.Button_ReadAobAddress_Click);
             // 
             // label6
             // 
@@ -310,15 +310,14 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "Address of AoB:";
             // 
-            // richTextBox_aobinput
+            // textBox_aobinput
             // 
-            this.richTextBox_aobinput.Enabled = false;
-            this.richTextBox_aobinput.Location = new System.Drawing.Point(11, 82);
-            this.richTextBox_aobinput.Name = "richTextBox_aobinput";
-            this.richTextBox_aobinput.Size = new System.Drawing.Size(535, 35);
-            this.richTextBox_aobinput.TabIndex = 4;
-            this.richTextBox_aobinput.Text = "";
-            this.richTextBox_aobinput.WordWrap = false;
+            this.textBox_aobinput.Enabled = false;
+            this.textBox_aobinput.Location = new System.Drawing.Point(11, 82);
+            this.textBox_aobinput.Name = "textBox_aobinput";
+            this.textBox_aobinput.Size = new System.Drawing.Size(535, 20);
+            this.textBox_aobinput.TabIndex = 4;
+            this.textBox_aobinput.WordWrap = false;
             // 
             // label5
             // 
@@ -337,7 +336,7 @@
             this.button_procrefresh.TabIndex = 2;
             this.button_procrefresh.Text = "Refresh";
             this.button_procrefresh.UseVisualStyleBackColor = true;
-            this.button_procrefresh.Click += new System.EventHandler(this.button_procrefresh_Click);
+            this.button_procrefresh.Click += new System.EventHandler(this.Button_ProcRefresh_Click);
             // 
             // comboBox_procs
             // 
@@ -347,7 +346,7 @@
             this.comboBox_procs.Name = "comboBox_procs";
             this.comboBox_procs.Size = new System.Drawing.Size(240, 21);
             this.comboBox_procs.TabIndex = 1;
-            this.comboBox_procs.SelectedIndexChanged += new System.EventHandler(this.comboBox_procs_SelectedIndexChanged);
+            this.comboBox_procs.SelectedIndexChanged += new System.EventHandler(this.ComboBox_Procs_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -361,10 +360,11 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
+            this.aboutToolStripMenuItem,
+            this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(601, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(604, 24);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -391,16 +391,24 @@
             this.checkForUpdateToolStripMenuItem.Text = "Check for Update";
             this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdateToolStripMenuItemClick);
             // 
-            // Form1
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.OptionsToolStripMenuItem_Click);
+            // 
+            // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 283);
+            this.ClientSize = new System.Drawing.Size(604, 281);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
-            this.Name = "Form1";
+            this.Name = "Mainform";
             this.Text = "AoB Sigmaker";
             this.Load += new System.EventHandler(this.Form1Load);
+            this.Shown += new System.EventHandler(this.AfterLoad);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -415,12 +423,12 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox richTextBox_input;
+        private System.Windows.Forms.TextBox textBox_input;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_loadfile;
         private System.Windows.Forms.Button button_gensig;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.RichTextBox richTextBox_result;
+        private System.Windows.Forms.TextBox textBox_result;
         private System.Windows.Forms.Button button_copycb;
         private System.Windows.Forms.ComboBox comboBox_returnstyle;
         private System.Windows.Forms.Label label3;
@@ -430,13 +438,13 @@
         private System.Windows.Forms.Button button_procrefresh;
         private System.Windows.Forms.ComboBox comboBox_procs;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RichTextBox richTextBox_aobinput;
+        private System.Windows.Forms.TextBox textBox_aobinput;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RichTextBox richTextBox_aobaddress;
+        private System.Windows.Forms.TextBox textBox_aobaddress;
         private System.Windows.Forms.Button button_readaobaddress;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.RichTextBox richTextBox_aobaddressvalue;
+        private System.Windows.Forms.TextBox textBox_aobaddressvalue;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBox_readtype;
         private System.Windows.Forms.CheckBox checkBox_shorten;
@@ -445,6 +453,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdateToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBox_halfbyte;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
     }
 }
 

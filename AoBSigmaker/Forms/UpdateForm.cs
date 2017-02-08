@@ -24,9 +24,7 @@
 
         private void UpdateFormLoad(object sender, EventArgs e)
         {
-            var diff =
-                UpdateHandler.IsOnlineDiff(
-                    "https://raw.githubusercontent.com/mztikk/AoBSigmaker/master/AoBSigmaker/Properties/AssemblyInfo.cs");
+            var diff = Updater.IsOnlineDiff();
             var display = diff
                               ? "Your version is outdated." + Environment.NewLine
                                 + "Please check github to download the latest one"
@@ -39,11 +37,10 @@
             {
                 this.linkLabel1.Hide();
             }
+
             this.updateInfo.Text = display;
-            this.label1.Text += Environment.NewLine + UpdateHandler.GetAssemblyVersion();
-            this.label2.Text += Environment.NewLine
-                                + UpdateHandler.GetGithubVersion(
-                                    "https://raw.githubusercontent.com/mztikk/AoBSigmaker/master/AoBSigmaker/Properties/AssemblyInfo.cs");
+            this.label1.Text += Environment.NewLine + Updater.GetAssemblyVersion();
+            this.label2.Text += Environment.NewLine + Updater.GetGithubVersion();
         }
 
         #endregion
