@@ -1,0 +1,178 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:AoBSigmaker"
+    x:Class="AoBSigmaker.MainWindow"
+    mc:Ignorable="d"
+    Title="MainWindow" Width="654.076" Height="450" Background="{StaticResource Window.Background}" WindowStyle="None"
+    ResizeMode="CanResizeWithGrip" AllowsTransparency="True" BorderThickness="8" Loaded="MainWindow_OnLoaded">
+    <!--
+    FF26A0DA
+    -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <ContentControl Grid.Row="0" Grid.ColumnSpan="2" MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown"
+                        MouseDoubleClick="Control_OnMouseDoubleClick">
+            <StackPanel Background="{StaticResource Window.Background}">
+                <TextBlock>
+                    <Run Text="AobSigmaker" />
+                </TextBlock>
+            </StackPanel>
+        </ContentControl>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Height="24" Width="24" Click="MinimizeClick">
+                <StackPanel>
+                    <Image Source="../Resources/minimizeButton.png" />
+                </StackPanel>
+            </Button>
+            <Button Height="24" Width="24" Click="MaximizeClick">
+                <StackPanel>
+                    <Image Source="../Resources/maximizeButton.png" />
+                </StackPanel>
+            </Button>
+            <Button Height="24" Width="24" Click="CloseClick">
+                <DockPanel>
+                    <Image Source="../Resources/closeButton.png" />
+                </DockPanel>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Menu>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About" Click="About_OnClick" />
+                    <MenuItem Header="_Check for Updates" Click="CheckUpdate_OnClick" />
+                </MenuItem>
+                <MenuItem Header="_Options" Click="Options_OnClick" />
+            </Menu>
+        </StackPanel>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0">
+            <TabControl SelectionChanged="TabControl_OnSelectionChanged">
+                <TabItem Header="Sigmaker">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="0.6*" />
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="0.3*" />
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Row="0" Grid.Column="0" ClipToBounds="True">
+                            <Label Content="Input:" DockPanel.Dock="Top" />
+                            <TextBox x:Name="userInput" AcceptsReturn="True" />
+                        </DockPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,15,0,0">
+                            <Button Click="LoadFile_OnClick" Height="50" Margin="15,12,15,15">
+                                <TextBlock TextWrapping="Wrap">
+                                    <Run Text="Load from File" />
+                                </TextBlock>
+                            </Button>
+                            <Button Click="Generate_OnClick" Height="50" Margin="15,0,15,15">
+                                <TextBlock TextWrapping="Wrap">
+                                    <Run Text="Generate Sig" />
+                                </TextBlock>
+                            </Button>
+                        </StackPanel>
+                        <DockPanel Grid.Row="2" Grid.Column="0">
+                            <Label Content="Result:" DockPanel.Dock="Top" />
+                            <TextBox x:Name="aobResult" AcceptsReturn="True" IsReadOnly="True"
+                                     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                                     Margin="0,0,0,5" />
+                        </DockPanel>
+                        <DockPanel Grid.Row="2" Grid.Column="1">
+                            <Button Click="CopyClipboard_OnClick" Height="50" Margin="15,0,15,0"
+                                    DockPanel.Dock="Bottom">
+                                <TextBlock TextWrapping="Wrap">
+                                    <Run Text="Copy to Clipboard" />
+                                </TextBlock>
+                            </Button>
+                        </DockPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal"
+                                    VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                            <CheckBox x:Name="halfByte" Content="Halfbyte Masking" Margin="5,15,5,5" />
+                            <CheckBox x:Name="shortenWildcards" Content="Shorten Wildcards" Margin="5,15,5,5" />
+                            <Label Content="Return style:" Margin="5,9,5,5" />
+                            <ComboBox x:Name="returnStyle" Margin="5,9,5,5">
+                                <ComboBoxItem Content="String" IsSelected="True" />
+                                <ComboBoxItem Content="Escaped hex + mask" />
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Sigscan">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80" />
+                            <RowDefinition Height="0.4*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0">
+                            <TextBlock>Selected Process:</TextBlock>
+                            <TextBlock x:Name="selectedProcText">None</TextBlock>
+                            <Button Click="ProcessSelector_OnClick" Width="70" Height="30" Margin="0,10,0,0">
+                                <TextBlock>Select</TextBlock>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Visibility="Hidden" x:Name="moduleSelection" Grid.Row="0" Grid.Column="1">
+                            <TextBlock>Selected Module:</TextBlock>
+                            <TextBlock x:Name="selectedModuleText">MainModule</TextBlock>
+                            <Button Click="ModuleSelector_OnClick" Width="70" Height="30" Margin="0,10,0,0">
+                                <TextBlock>Select</TextBlock>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0">
+                            <Label>AoB Sig:</Label>
+                            <TextBox x:Name="aobSigScan" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,11,0,0">
+                            <Button Click="ReadSig_OnClick" Width="50" Height="30">
+                                <TextBlock>
+                                    Read
+                                </TextBlock>
+                            </Button>
+                            <Label Margin="0,10,0,0">Type:</Label>
+                            <ComboBox x:Name="valueType" Margin="0,0,50,0">
+                                <ComboBoxItem IsSelected="True">Don't read Value</ComboBoxItem>
+                                <ComboBoxItem>Byte</ComboBoxItem>
+                                <ComboBoxItem>2 Bytes</ComboBoxItem>
+                                <ComboBoxItem>2 Bytes Signed</ComboBoxItem>
+                                <ComboBoxItem>4 Bytes</ComboBoxItem>
+                                <ComboBoxItem>4 Bytes Signed</ComboBoxItem>
+                                <ComboBoxItem>8 Bytes</ComboBoxItem>
+                                <ComboBoxItem>8 Bytes Signed</ComboBoxItem>
+                                <ComboBoxItem>Float</ComboBoxItem>
+                                <ComboBoxItem>Double</ComboBoxItem>
+                                <ComboBoxItem>String</ComboBoxItem>
+                                <ComboBoxItem>IntPtr</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="1">
+                            <Label>Address of AoB:</Label>
+                            <TextBox x:Name="aobAddress" IsReadOnly="True" />
+                            <Label Margin="0,10,0,0">Value:</Label>
+                            <TextBox x:Name="aobValue" IsReadOnly="True" />
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -1,16 +1,14 @@
 ﻿namespace AoBSigmaker
 {
-    using AoBSigmaker.Properties;
-
-    internal static class SettingsManager
+    public static class Settings
     {
         #region Static Fields
 
-        private static FileReadMode frm = Settings.Default.FileReadMode;
+        private static AoBGen.FileReadMode frm = (AoBGen.FileReadMode)Properties.Settings.Default.fileReadMode;
 
-        private static bool tv = Settings.Default.TrustValidity;
+        private static bool tv = Properties.Settings.Default.trustValidity;
 
-        private static bool upd = Settings.Default.CheckForUpdateOnStartup;
+        private static bool upd = Properties.Settings.Default.checkUpdates;
 
         #endregion
 
@@ -22,27 +20,25 @@
             {
                 return upd;
             }
-
             set
             {
                 upd = value;
-                Settings.Default.CheckForUpdateOnStartup = value;
-                Settings.Default.Save();
+                Properties.Settings.Default.checkUpdates = value;
+                Properties.Settings.Default.Save();
             }
         }
 
-        internal static FileReadMode FileReadMode
+        internal static AoBGen.FileReadMode FileReadMode
         {
             get
             {
                 return frm;
             }
-
             set
             {
                 frm = value;
-                Settings.Default.FileReadMode = value;
-                Settings.Default.Save();
+                Properties.Settings.Default.fileReadMode = (int)value;
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -52,12 +48,11 @@
             {
                 return tv;
             }
-
             set
             {
                 tv = value;
-                Settings.Default.TrustValidity = value;
-                Settings.Default.Save();
+                Properties.Settings.Default.trustValidity = value;
+                Properties.Settings.Default.Save();
             }
         }
 

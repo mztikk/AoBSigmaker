@@ -1,13 +1,14 @@
 # Dependencies
 
-.NET Framework 4.6.2
-https://www.microsoft.com/en-us/download/details.aspx?id=53345
+.NET Framework 4.7.1
+https://www.microsoft.com/en-us/download/details.aspx?id=56115
+https://www.microsoft.com/net/download/thank-you/net471
 
 # Usage
 example:
 
-http://pastebin.com/Rbwatx44
+https://pastebin.com/20v0e6WG
 
-http://puu.sh/pzIw5/0c50aedd28.png
+https://puu.sh/yfsNy/c089c3ffee.png
 
-http://puu.sh/pzIx0/d9066c7938.png
+https://puu.sh/yfsPI/ab1a2df8f8.png

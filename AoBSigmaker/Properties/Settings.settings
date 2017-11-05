@@ -4,14 +4,23 @@
               GeneratedClassNamespace="AoBSigmaker.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="TrustValidity" Type="System.Boolean" Scope="User">
+    <Setting Name="halfByte" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="CheckForUpdateOnStartup" Type="System.Boolean" Scope="User">
+    <Setting Name="shortenWildcards" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="returnStyle" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="trustValidity" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="checkUpdates" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="FileReadMode" Type="AoBSigmaker.FileReadMode" Scope="User">
-      <Value Profile="(Default)">FullCopy</Value>
+    <Setting Name="fileReadMode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

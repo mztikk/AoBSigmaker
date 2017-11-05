@@ -1,14 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoBSigmaker", "AoBSigmaker\AoBSigmaker.csproj", "{BB5720E4-5DE0-4380-855B-D75442769CC5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EE4B63D7-0D4D-4F42-B7D5-1AC418D95869}"
-	ProjectSection(SolutionItems) = preProject
-		README.rmd = README.rmd
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoBSigmaker", "AoBSigmaker\AoBSigmaker.csproj", "{8923A18F-6AF3-43BF-9EF8-54782EB49E84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,18 +15,19 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Debug|x64.ActiveCfg = Debug|x64
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Debug|x64.Build.0 = Debug|x64
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Debug|x86.ActiveCfg = Debug|x86
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Debug|x86.Build.0 = Debug|x86
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Release|x64.ActiveCfg = Release|x64
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Release|x64.Build.0 = Release|x64
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Release|x86.ActiveCfg = Release|x86
-		{BB5720E4-5DE0-4380-855B-D75442769CC5}.Release|x86.Build.0 = Release|x86
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Debug|x64.ActiveCfg = Debug|x64
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Debug|x64.Build.0 = Debug|x64
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Debug|x64.Deploy.0 = Debug|x64
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Debug|x86.ActiveCfg = Debug|x86
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Debug|x86.Build.0 = Debug|x86
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Release|x64.ActiveCfg = Release|x64
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Release|x64.Build.0 = Release|x64
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Release|x86.ActiveCfg = Release|x86
+		{8923A18F-6AF3-43BF-9EF8-54782EB49E84}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

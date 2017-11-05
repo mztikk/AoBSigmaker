@@ -12,7 +12,7 @@ namespace AoBSigmaker.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,36 +26,72 @@ namespace AoBSigmaker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool TrustValidity {
+        public bool halfByte {
             get {
-                return ((bool)(this["TrustValidity"]));
+                return ((bool)(this["halfByte"]));
             }
             set {
-                this["TrustValidity"] = value;
+                this["halfByte"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool shortenWildcards {
+            get {
+                return ((bool)(this["shortenWildcards"]));
+            }
+            set {
+                this["shortenWildcards"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int returnStyle {
+            get {
+                return ((int)(this["returnStyle"]));
+            }
+            set {
+                this["returnStyle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool trustValidity {
+            get {
+                return ((bool)(this["trustValidity"]));
+            }
+            set {
+                this["trustValidity"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool CheckForUpdateOnStartup {
+        public bool checkUpdates {
             get {
-                return ((bool)(this["CheckForUpdateOnStartup"]));
+                return ((bool)(this["checkUpdates"]));
             }
             set {
-                this["CheckForUpdateOnStartup"] = value;
+                this["checkUpdates"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("FullCopy")]
-        public global::AoBSigmaker.FileReadMode FileReadMode {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int fileReadMode {
             get {
-                return ((global::AoBSigmaker.FileReadMode)(this["FileReadMode"]));
+                return ((int)(this["fileReadMode"]));
             }
             set {
-                this["FileReadMode"] = value;
+                this["fileReadMode"] = value;
             }
         }
     }
