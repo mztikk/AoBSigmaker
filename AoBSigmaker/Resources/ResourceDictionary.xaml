@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
                     xmlns:AoBSigmaker="clr-namespace:AoBSigmaker">
 
     <SolidColorBrush x:Key="Window.Background" Color="#FF2D2D30" />
@@ -10,7 +10,7 @@
     <SolidColorBrush x:Key="Control.Border" Color="#FF26A0DA" />
     <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#FF3F3F46" />
     <FontFamily x:Key="DefaultFont">Segoe UI</FontFamily>
-    <FontFamily x:Key="TextBoxFont">Segoe UI Mono</FontFamily>
+    <FontFamily x:Key="TextBoxFont">Consolas</FontFamily>
 
     <Style TargetType="{x:Type Window}">
         <Setter Property="Background" Value="{StaticResource Window.Background}" />

@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:AoBSigmaker"
     x:Class="AoBSigmaker.MainWindow"
     mc:Ignorable="d"
-    Title="MainWindow" Width="654.076" Height="450" Background="{StaticResource Window.Background}" WindowStyle="None"
+    Title="AoBSigmaker" Width="654.076" Height="450" Background="{StaticResource Window.Background}" WindowStyle="None"
     ResizeMode="CanResizeWithGrip" AllowsTransparency="True" BorderThickness="8" Loaded="MainWindow_OnLoaded">
     <!--
     FF26A0DA
