@@ -1,27 +1,17 @@
-﻿namespace AoBSigmaker
-{
-    using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 
+namespace AoBSigmaker
+{
     /// <summary>
-    ///     Interaction logic for App.xaml
+    /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        #region Constructors and Destructors
-
-        public App()
-        {
-#if DEBUG
-            IsDebugMode = true;
-#endif
-        }
-
-        #endregion
-
-        #region Public Properties
-
-        public static bool IsDebugMode { get; private set; }
-
-        #endregion
     }
 }

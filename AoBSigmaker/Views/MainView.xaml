@@ -1,0 +1,24 @@
+﻿<Controls:MetroWindow x:Class="AoBSigmaker.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:s="https://github.com/canton7/Stylet"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:AoBSigmaker.Views"
+        xmlns:lctrls="clr-namespace:AoBSigmaker.Controls"
+        mc:Ignorable="d"
+        Title="AoB Sigmaker" Height="450" Width="800">
+    <Grid>
+        <Controls:MetroAnimatedTabControl Grid.Column="1" Grid.Row="1">
+            <Controls:MetroTabItem Header="Maker">
+                <lctrls:MakerTab></lctrls:MakerTab>
+            </Controls:MetroTabItem>
+            
+            <Controls:MetroTabItem Header="Scanner">
+                <lctrls:ScannerTab></lctrls:ScannerTab>
+            </Controls:MetroTabItem>
+        </Controls:MetroAnimatedTabControl>
+    </Grid>
+</Controls:MetroWindow>
