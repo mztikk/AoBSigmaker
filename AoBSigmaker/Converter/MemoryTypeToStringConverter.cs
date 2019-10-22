@@ -8,6 +8,11 @@ namespace AoBSigmaker.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value is null)
+            {
+                return "None";
+            }
+
             if (value is MemoryType t)
             {
                 return t switch
