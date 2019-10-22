@@ -1,35 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using AoBSigmaker.AoB;
+using AoBSigmaker.Converter;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using RFReborn.AoB;
+using RFReborn.Windows;
 using RFReborn.Windows.Extensions;
 using RFReborn.Windows.Memory;
 using Stylet;
 
 namespace AoBSigmaker.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : Screen
     {
         private readonly IAobGenerator _aobGenerator;
         private readonly IAobShortener _aobShortener;
         private readonly Func<OptionsViewModel> _getOptionsVM;
         private readonly Func<ProcessSelectorViewModel> _getProcessSelectorVM;
+        private readonly Func<ModuleSelectorViewModel> _getModuleSelectorVM;
         private readonly IWindowManager _windowManager;
 
-        public MainViewModel(IWindowManager windowManager, IAobGenerator aobGenerator, IAobShortener aobShortener, Func<OptionsViewModel> getOptionsVM, Func<ProcessSelectorViewModel> getProcessSelectorVM)
+        public MainViewModel(
+            IWindowManager windowManager,
+            IAobGenerator aobGenerator,
+            IAobShortener aobShortener,
+            Func<OptionsViewModel> getOptionsVM,
+            Func<ProcessSelectorViewModel> getProcessSelectorVM,
+            Func<ModuleSelectorViewModel> getModuleSelectorVM)
         {
             _aobGenerator = aobGenerator;
             _aobShortener = aobShortener;
             _getOptionsVM = getOptionsVM;
             _getProcessSelectorVM = getProcessSelectorVM;
+            _getModuleSelectorVM = getModuleSelectorVM;
             _windowManager = windowManager;
         }
 
@@ -43,7 +53,7 @@ namespace AoBSigmaker.ViewModels
                 if (value != _aobInput)
                 {
                     _aobInput = value;
-                    NotifyPropertyChanged();
+                    NotifyOfPropertyChange();
                 }
             }
         }
@@ -58,7 +68,7 @@ namespace AoBSigmaker.ViewModels
                 if (value != _aobResult)
                 {
                     _aobResult = value;
-                    NotifyPropertyChanged();
+                    NotifyOfPropertyChange();
                 }
             }
         }
@@ -73,7 +83,7 @@ namespace AoBSigmaker.ViewModels
                 if (value != _shortenWildcards)
                 {
                     _shortenWildcards = value;
-                    NotifyPropertyChanged();
+                    NotifyOfPropertyChange();
                 }
             }
         }
@@ -88,7 +98,7 @@ namespace AoBSigmaker.ViewModels
         //        if (value != _selectedProcessIdName)
         //        {
         //            _selectedProcessIdName = value;
-        //            NotifyPropertyChanged();
+        //            NotifyOfPropertyChange();
         //        }
         //    }
         //}
@@ -103,7 +113,9 @@ namespace AoBSigmaker.ViewModels
                 if (value != _selectedProcess)
                 {
                     _selectedProcess = value;
-                    NotifyPropertyChanged();
+                    NotifyOfPropertyChange();
+
+                    CanSelectModule = value is { };
                 }
             }
         }
@@ -118,7 +130,7 @@ namespace AoBSigmaker.ViewModels
                 if (value != _aobScanInput)
                 {
                     _aobScanInput = value;
-                    NotifyPropertyChanged();
+                    NotifyOfPropertyChange();
                 }
             }
         }
@@ -133,7 +145,7 @@ namespace AoBSigmaker.ViewModels
                 if (value != _aobScanResult)
                 {
                     _aobScanResult = value;
-                    NotifyPropertyChanged();
+                    NotifyOfPropertyChange();
                 }
             }
         }
@@ -148,7 +160,37 @@ namespace AoBSigmaker.ViewModels
                 if (value != _aobScanValue)
                 {
                     _aobScanValue = value;
-                    NotifyPropertyChanged();
+                    NotifyOfPropertyChange();
+                }
+            }
+        }
+
+        private ProcessModule? _selectedModule;
+
+        public ProcessModule? SelectedModule
+        {
+            get => _selectedModule;
+            private set
+            {
+                if (value != _selectedModule)
+                {
+                    _selectedModule = value;
+                    NotifyOfPropertyChange();
+                }
+            }
+        }
+
+        private bool _canSelectModule;
+
+        public bool CanSelectModule
+        {
+            get => _canSelectModule;
+            private set
+            {
+                if (value != _canSelectModule)
+                {
+                    _canSelectModule = value;
+                    NotifyOfPropertyChange();
                 }
             }
         }
@@ -212,6 +254,18 @@ namespace AoBSigmaker.ViewModels
             if (processSelector.SelectedProcess is { })
             {
                 SelectedProcess = processSelector.SelectedProcess;
+                SelectedModule = SelectedProcess.MainModule;
+            }
+        }
+
+        public void SelectModule()
+        {
+            ModuleSelectorViewModel moduleSelector = _getModuleSelectorVM();
+            moduleSelector.Process = SelectedProcess;
+            _windowManager.ShowDialog(moduleSelector);
+            if (moduleSelector.SelectedModule is { })
+            {
+                SelectedModule = moduleSelector.SelectedModule;
             }
         }
 
@@ -223,13 +277,13 @@ namespace AoBSigmaker.ViewModels
             set
             {
                 _selectedMemoryType = value;
-                NotifyPropertyChanged();
+                NotifyOfPropertyChange();
             }
         }
 
-        public IEnumerable<MemoryType> MyEnumTypeValues => Enum.GetValues(typeof(MemoryType)).Cast<MemoryType>();
+        public IEnumerable<MemoryType> MemoryTypeValues => Enum.GetValues(typeof(MemoryType)).Cast<MemoryType>();
 
-        public void ReadSignature()
+        public async Task ReadSignature()
         {
             if (SelectedProcess is null)
             {
@@ -241,11 +295,25 @@ namespace AoBSigmaker.ViewModels
                 return;
             }
 
+            if (!ProcessHelpers.ProcessExists(SelectedProcess))
+            {
+                ProcessToIdNameConverter converter = new ProcessToIdNameConverter();
+                string msg = $"{converter.Convert(SelectedProcess, typeof(string), null, null)} does not exist.";
+                if (View is MetroWindow v)
+                {
+                    await v.ShowMessageAsync("ERROR", msg).ConfigureAwait(false);
+                }
+                //_windowManager.ShowMessageBox(msg);
+
+                SelectedProcess = null;
+                return;
+            }
+
             Signature sig = new Signature(AobScanInput);
 
             using (RemoteMemory memory = new RemoteMemory(SelectedProcess))
             {
-                long ptr = memory.FindSignature(sig);
+                long ptr = memory.FindSignature(sig, SelectedModule);
                 AobScanResult = ptr.ToString();
                 if (ptr != -1)
                 {
@@ -299,9 +367,5 @@ namespace AoBSigmaker.ViewModels
                 }
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

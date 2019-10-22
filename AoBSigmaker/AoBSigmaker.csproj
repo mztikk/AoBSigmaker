@@ -17,4 +17,16 @@
     <ProjectReference Include="..\..\RFReborn.Windows\RFReborn.Windows\RFReborn.Windows.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\ModuleSelectorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Views\ModuleSelectorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>
