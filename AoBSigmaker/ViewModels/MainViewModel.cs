@@ -303,7 +303,10 @@ namespace AoBSigmaker.ViewModels
                 {
                     await v.ShowMessageAsync("ERROR", msg).ConfigureAwait(false);
                 }
-                //_windowManager.ShowMessageBox(msg);
+                else
+                {
+                    _windowManager.ShowMessageBox(msg);
+                }
 
                 SelectedProcess = null;
                 return;
