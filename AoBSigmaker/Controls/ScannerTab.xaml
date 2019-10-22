@@ -14,6 +14,7 @@
     <Grid>
         <Grid.Resources>
             <converters:ProcessToIdNameConverter x:Key="processConverter"/>
+            <converters:MemoryTypeToStringConverter x:Key="memoryTypeConverter"/>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -68,7 +69,13 @@
 
                 <StackPanel Grid.Row="0" Grid.Column="0">
                     <TextBlock Text="Type:"></TextBlock>
-                    <ComboBox SelectedItem="{Binding SelectedMemoryType}" ItemsSource="{Binding MyEnumTypeValues}"></ComboBox>
+                    <ComboBox SelectedItem="{Binding SelectedMemoryType}" ItemsSource="{Binding MyEnumTypeValues}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource memoryTypeConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
                     <WrapPanel Margin="0,10,0,0">
                         <Button Width="44" Height="44" Focusable="False" ToolTip="Read Aob Sig" Command="{s:Action ReadSignature}">
