@@ -8,8 +8,6 @@ using System.Windows.Input;
 using AoBSigmaker.Views;
 using RFReborn.Windows;
 using RFReborn.Windows.Memory;
-using RFReborn.Windows.Native;
-using RFReborn.Windows.Native.Enums;
 using Stylet;
 
 namespace AoBSigmaker.ViewModels
