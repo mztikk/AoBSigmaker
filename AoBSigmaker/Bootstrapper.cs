@@ -1,5 +1,6 @@
 ﻿using System;
 using AoBSigmaker.AoB;
+using AoBSigmaker.Styling;
 using AoBSigmaker.ViewModels;
 using RFReborn.Random;
 using Stylet;
@@ -14,6 +15,7 @@ namespace AoBSigmaker
             builder.Bind<Random>().To<CryptoRandom>().InSingletonScope();
             builder.Bind<IAobGenerator>().To<AobGenerator>();
             builder.Bind<IAobShortener>().To<AobShortener>();
+            builder.Bind<IThemeBuilder>().To<ThemeBuilder>();
 
             base.ConfigureIoC(builder);
         }

@@ -5,8 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using AoBSigmaker.AoB;
 using AoBSigmaker.Converter;
+using AoBSigmaker.Styling;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
@@ -25,6 +27,7 @@ namespace AoBSigmaker.ViewModels
         private readonly Func<OptionsViewModel> _getOptionsVM;
         private readonly Func<ProcessSelectorViewModel> _getProcessSelectorVM;
         private readonly Func<ModuleSelectorViewModel> _getModuleSelectorVM;
+        private readonly ThemeManager _themeManager;
         private readonly IWindowManager _windowManager;
 
         public MainViewModel(
@@ -33,14 +36,30 @@ namespace AoBSigmaker.ViewModels
             IAobShortener aobShortener,
             Func<OptionsViewModel> getOptionsVM,
             Func<ProcessSelectorViewModel> getProcessSelectorVM,
-            Func<ModuleSelectorViewModel> getModuleSelectorVM)
+            Func<ModuleSelectorViewModel> getModuleSelectorVM,
+            ThemeManager themeManager)
         {
             _aobGenerator = aobGenerator;
             _aobShortener = aobShortener;
             _getOptionsVM = getOptionsVM;
             _getProcessSelectorVM = getProcessSelectorVM;
             _getModuleSelectorVM = getModuleSelectorVM;
+            _themeManager = themeManager;
             _windowManager = windowManager;
+
+            var pink = new Styling.Theme();
+            pink.BackgroundColor = Colors.DeepPink;
+            pink.ForegroundColor = Colors.AliceBlue;
+            pink.Highlighter1 = Colors.Magenta;
+            pink.Highlighter2 = Colors.DarkMagenta;
+            pink.Highlighter3 = Colors.Pink;
+            pink.Buttons1 = Colors.Blue;
+            pink.Buttons2 = Colors.Blue;
+            pink.ButtonsMouseover = Colors.BlueViolet;
+
+            _themeManager.AddTheme(pink, "pink");
+            _themeManager.LoadAndInjectTheme("pink");
+            _themeManager.ApplyTheme("pink");
         }
 
         private string _aobInput;
