@@ -48,14 +48,15 @@ namespace AoBSigmaker.ViewModels
             _windowManager = windowManager;
 
             var pink = new Styling.Theme();
-            pink.BackgroundColor = Colors.DeepPink;
+            pink.BackgroundColor = Colors.DarkSlateGray;
             pink.ForegroundColor = Colors.AliceBlue;
             pink.Highlighter1 = Colors.Magenta;
-            pink.Highlighter2 = Colors.DarkMagenta;
+            pink.Highlighter2 = Colors.DarkOliveGreen;
             pink.Highlighter3 = Colors.Pink;
             pink.Buttons1 = Colors.Blue;
             pink.Buttons2 = Colors.Blue;
             pink.ButtonsMouseover = Colors.BlueViolet;
+            pink.Theme6 = Colors.DarkSalmon;
 
             _themeManager.AddTheme(pink, "pink");
             _themeManager.LoadAndInjectTheme("pink");
