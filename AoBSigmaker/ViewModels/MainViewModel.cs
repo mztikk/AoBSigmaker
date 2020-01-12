@@ -329,14 +329,19 @@ namespace AoBSigmaker.ViewModels
             using (RemoteMemory memory = new RemoteMemory(SelectedProcess))
             {
                 long ptr = memory.FindSignature(sig, SelectedModule);
-                AobScanResult = ptr.ToString();
-                if (ptr != -1)
+                if (ptr == -1)
                 {
+                    AobScanResult = "Didn't find an address for the given signature";
+                }
+                else
+                {
+                    AobScanResult = "0x" + ptr.ToString("X2");
                     IntPtr intptr = new IntPtr(ptr);
                     string readValue;
                     switch (SelectedMemoryType)
                     {
                         case MemoryType.None:
+                            readValue = string.Empty
                             return;
                         case MemoryType.Byte:
                             readValue = memory.Read<byte>(intptr).ToString();
