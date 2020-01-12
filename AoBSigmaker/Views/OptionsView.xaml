@@ -25,7 +25,10 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <Controls:ToggleSwitch IsChecked="{Binding Options.TrustValidity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Trust Validity</Controls:ToggleSwitch>
+            <Controls:ToggleSwitch
+                ToolTip="Trust the validity of aob and disable error reporting.&#x0a;This will give more speed but unknown behaviour and/or exceptions when inputting wrong aobs."
+                ToolTipService.ShowDuration="500000"
+                IsChecked="{Binding Options.TrustValidity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Trust Validity</Controls:ToggleSwitch>
         </StackPanel>
 
         <lctrls:ItemMarginWrapPanel Grid.Row="3" Grid.Column="1" ItemMargin="0,0,5,0">
