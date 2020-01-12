@@ -216,8 +216,15 @@ namespace AoBSigmaker.ViewModels
                 generated = _aobShortener.Shorten(generated);
             }
 
-            Signature sig = new Signature(generated);
-            AobResult = sig.Sig;
+            if (string.IsNullOrWhiteSpace(generated))
+            {
+                AobResult = string.Empty;
+            }
+            else
+            {
+                Signature sig = new Signature(generated);
+                AobResult = sig.Sig;
+            }
         }
 
         public void CopyResultToClipboard()
