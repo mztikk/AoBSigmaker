@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using RFReborn;
 
 namespace AoBSigmaker.AoB
@@ -19,7 +20,7 @@ namespace AoBSigmaker.AoB
             return trimmed.Length % 2 == 0 && !trimmed.ToLowerInvariant().Except(AllowedChars).Any();
         }
 
-        public static bool AreValid(string[] input)
+        public static bool AreValid(IEnumerable<string> input)
         {
             int? len = null;
 

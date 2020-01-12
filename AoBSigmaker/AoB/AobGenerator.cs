@@ -1,16 +1,17 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using RFReborn;
 
 namespace AoBSigmaker.AoB
 {
     public class AobGenerator : IAobGenerator
     {
-        public string Make(string[] input)
+        public string Make(IEnumerable<string> input)
         {
             // get the smallest
-            string[] ordered = input.Select(StringR.RemoveWhitespace).OrderBy(x => x.Length).ToArray();
+            IOrderedEnumerable<string> ordered = input.Select(StringR.RemoveWhitespace).Where(x => !string.IsNullOrWhiteSpace(x)).OrderBy(x => x.Length);
 
-            char[] build = ordered[0].ToCharArray();
+            char[] build = ordered.First().ToCharArray();
 
             // check for differences
             foreach (string aob in ordered)

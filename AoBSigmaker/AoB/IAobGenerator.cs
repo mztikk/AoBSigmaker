@@ -1,7 +1,9 @@
-﻿namespace AoBSigmaker.AoB
+﻿using System.Collections.Generic;
+
+namespace AoBSigmaker.AoB
 {
     public interface IAobGenerator
     {
-        string Make(string[] input);
+        string Make(IEnumerable<string> input);
     }
 }
