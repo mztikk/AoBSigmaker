@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using AoBSigmaker.AoB;
 using AoBSigmaker.Converter;
+using AoBSigmaker.Options;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
@@ -22,6 +23,7 @@ namespace AoBSigmaker.ViewModels
     {
         private readonly IAobGenerator _aobGenerator;
         private readonly IAobShortener _aobShortener;
+        private readonly SigmakerOptions _options;
         private readonly Func<OptionsViewModel> _getOptionsVM;
         private readonly Func<ProcessSelectorViewModel> _getProcessSelectorVM;
         private readonly Func<ModuleSelectorViewModel> _getModuleSelectorVM;
@@ -31,12 +33,14 @@ namespace AoBSigmaker.ViewModels
             IWindowManager windowManager,
             IAobGenerator aobGenerator,
             IAobShortener aobShortener,
+            SigmakerOptions options,
             Func<OptionsViewModel> getOptionsVM,
             Func<ProcessSelectorViewModel> getProcessSelectorVM,
             Func<ModuleSelectorViewModel> getModuleSelectorVM)
         {
             _aobGenerator = aobGenerator;
             _aobShortener = aobShortener;
+            _options = options;
             _getOptionsVM = getOptionsVM;
             _getProcessSelectorVM = getProcessSelectorVM;
             _getModuleSelectorVM = getModuleSelectorVM;
@@ -204,7 +208,7 @@ namespace AoBSigmaker.ViewModels
 
             string[] aobs = AobInput.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            if (!AobValidator.AreValid(aobs, out AobError? invalid))
+            if (!_options.TrustValidity && !AobValidator.AreValid(aobs, out AobError? invalid))
             {
                 AobResult = invalid.Aob + Environment.NewLine + invalid.ToString();
                 return;
