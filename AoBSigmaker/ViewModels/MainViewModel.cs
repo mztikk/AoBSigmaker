@@ -204,8 +204,9 @@ namespace AoBSigmaker.ViewModels
 
             string[] aobs = AobInput.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-            if (!AobValidator.AreValid(aobs))
+            if (!AobValidator.AreValid(aobs, out string? invalid))
             {
+                AobResult = $"{invalid}{Environment.NewLine}Is not a valid aob.";
                 return;
             }
 

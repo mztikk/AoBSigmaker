@@ -20,26 +20,30 @@ namespace AoBSigmaker.AoB
             return trimmed.Length % 2 == 0 && !trimmed.ToLowerInvariant().Except(AllowedChars).Any();
         }
 
-        public static bool AreValid(IEnumerable<string> input)
+        public static bool AreValid(IEnumerable<string> input) => AreValid(input, out string? _);
+
+        public static bool AreValid(IEnumerable<string> input, out string? invalid)
         {
             int? len = null;
-
+            invalid = null;
             foreach (string aob in input)
             {
-                string trimed = StringR.RemoveWhitespace(aob);
+                string trimmed = StringR.RemoveWhitespace(aob);
 
                 if (len is null)
                 {
-                    len = trimed.Length;
+                    len = trimmed.Length;
                 }
 
-                if (len != trimed.Length)
+                if (len != trimmed.Length)
                 {
+                    invalid = aob;
                     return false;
                 }
 
-                if (!IsValid(trimed))
+                if (!IsValid(trimmed))
                 {
+                    invalid = aob;
                     return false;
                 }
             }
