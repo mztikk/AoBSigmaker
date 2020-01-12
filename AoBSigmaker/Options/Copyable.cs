@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace AoBSigmaker.Options
 {
-    public class Copyable<T> : INotifyPropertyChanged
+    public abstract class Copyable<T> : INotifyPropertyChanged
     {
         public void CopyTo(Copyable<T> target)
         {
