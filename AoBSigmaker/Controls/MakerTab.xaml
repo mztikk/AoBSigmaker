@@ -83,14 +83,6 @@
                 <Button Width="32" Height="32" Focusable="False" Command="{s:Action OpenSettings}">
                     <iconPacks:PackIconMaterial Width="16" Height="16" Kind="Settings"></iconPacks:PackIconMaterial>
                 </Button>
-
-                <Button Width="32" Height="32" Focusable="False">
-                    <iconPacks:PackIconMaterial Width="16" Height="16" Kind="Account"></iconPacks:PackIconMaterial>
-                </Button>
-
-                <Button Width="32" Height="32" Focusable="False" Command="{s:Action SelectProcess}">
-                    <iconPacks:PackIconMaterial Width="16" Height="16" Kind="Account"></iconPacks:PackIconMaterial>
-                </Button>
             </lctrls:ItemMarginWrapPanel>
         </Grid>
     </Grid>
