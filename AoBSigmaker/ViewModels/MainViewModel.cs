@@ -341,7 +341,7 @@ namespace AoBSigmaker.ViewModels
                     switch (SelectedMemoryType)
                     {
                         case MemoryType.None:
-                            readValue = string.Empty
+                            readValue = string.Empty;
                             return;
                         case MemoryType.Byte:
                             readValue = memory.Read<byte>(intptr).ToString();
