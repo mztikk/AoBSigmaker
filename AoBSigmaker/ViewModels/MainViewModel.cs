@@ -267,6 +267,11 @@ namespace AoBSigmaker.ViewModels
 
         public void SelectModule()
         {
+            if (SelectedProcess is null)
+            {
+                return;
+            }
+
             ModuleSelectorViewModel moduleSelector = _getModuleSelectorVM();
             moduleSelector.Process = SelectedProcess;
             _windowManager.ShowDialog(moduleSelector);
@@ -288,7 +293,7 @@ namespace AoBSigmaker.ViewModels
             }
         }
 
-        public IEnumerable<MemoryType> MemoryTypeValues => Enum.GetValues(typeof(MemoryType)).Cast<MemoryType>();
+        public static IEnumerable<MemoryType> MemoryTypeValues => Enum.GetValues(typeof(MemoryType)).Cast<MemoryType>();
 
         public async Task ReadSignature()
         {
