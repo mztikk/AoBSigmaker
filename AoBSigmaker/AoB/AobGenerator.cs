@@ -11,6 +11,11 @@ namespace AoBSigmaker.AoB
             // get the smallest
             IOrderedEnumerable<string> ordered = input.Select(StringR.RemoveWhitespace).Where(x => !string.IsNullOrWhiteSpace(x)).OrderBy(x => x.Length);
 
+            if (!ordered.Any())
+            {
+                return string.Empty;
+            }
+
             char[] build = ordered.First().ToCharArray();
 
             // check for differences
