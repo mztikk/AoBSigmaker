@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using RFReborn;
 
@@ -8,46 +9,45 @@ namespace AoBSigmaker.AoB
     {
         private const string AllowedChars = "abcdef0123456789?";
 
-        public static bool IsValid(string? input)
+        public static bool IsValid(string? input, [NotNullWhen(false)] out string? errorMsg)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
+                errorMsg = "Input is null or empty";
                 return false;
             }
 
             string trimmed = StringR.RemoveWhitespace(input);
 
-            return trimmed.Length % 2 == 0 && !trimmed.ToLowerInvariant().Except(AllowedChars).Any();
+            IEnumerable<char> illegalChars = trimmed.ToLowerInvariant().Except(AllowedChars);
+            if (illegalChars.Any())
+            {
+                errorMsg = $"Illegal chars {RFReborn.Extensions.IEnumerableExtensions.ToObjectsString(illegalChars)}";
+                return false;
+            }
+
+            if (trimmed.Length % 2 != 0)
+            {
+                errorMsg = "Bytes need to be full bytes, length of input has to be divisible by two";
+                return false;
+            }
+
+            errorMsg = null;
+            return true;
         }
 
-        public static bool AreValid(IEnumerable<string> input) => AreValid(input, out string? _);
-
-        public static bool AreValid(IEnumerable<string> input, out string? invalid)
+        public static bool AreValid(IEnumerable<string> input, [NotNullWhen(false)] out AobError? aobError)
         {
-            int? len = null;
-            invalid = null;
             foreach (string aob in input)
             {
-                string trimmed = StringR.RemoveWhitespace(aob);
-
-                if (len is null)
+                if (!IsValid(aob, out string? errorMsg))
                 {
-                    len = trimmed.Length;
-                }
-
-                if (len != trimmed.Length)
-                {
-                    invalid = aob;
-                    return false;
-                }
-
-                if (!IsValid(trimmed))
-                {
-                    invalid = aob;
+                    aobError = new AobError(aob, errorMsg);
                     return false;
                 }
             }
 
+            aobError = null;
             return true;
         }
     }

@@ -9,7 +9,7 @@ namespace AoBSigmaker.AoB
         public string Make(IEnumerable<string> input)
         {
             // get the smallest
-            IOrderedEnumerable<string> ordered = input.Select(StringR.RemoveWhitespace).Where(x => !string.IsNullOrWhiteSpace(x) && AobValidator.IsValid(x)).OrderBy(x => x.Length);
+            IOrderedEnumerable<string> ordered = input.Select(StringR.RemoveWhitespace).Where(x => !string.IsNullOrWhiteSpace(x)).OrderBy(x => x.Length);
 
             if (!ordered.Any())
             {
