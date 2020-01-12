@@ -43,9 +43,9 @@ namespace AoBSigmaker.ViewModels
             _windowManager = windowManager;
         }
 
-        private string _aobInput;
+        private string? _aobInput;
 
-        public string AobInput
+        public string? AobInput
         {
             get => _aobInput;
             set
@@ -58,9 +58,9 @@ namespace AoBSigmaker.ViewModels
             }
         }
 
-        private string _aobResult;
+        private string? _aobResult;
 
-        public string AobResult
+        public string? AobResult
         {
             get => _aobResult;
             set
@@ -120,9 +120,9 @@ namespace AoBSigmaker.ViewModels
             }
         }
 
-        private string _aobScanInput;
+        private string? _aobScanInput;
 
-        public string AobScanInput
+        public string? AobScanInput
         {
             get => _aobScanInput;
             set
@@ -135,9 +135,9 @@ namespace AoBSigmaker.ViewModels
             }
         }
 
-        private string _aobScanResult;
+        private string? _aobScanResult;
 
-        public string AobScanResult
+        public string? AobScanResult
         {
             get => _aobScanResult;
             set
@@ -150,9 +150,9 @@ namespace AoBSigmaker.ViewModels
             }
         }
 
-        private string _aobScanValue;
+        private string? _aobScanValue;
 
-        public string AobScanValue
+        public string? AobScanValue
         {
             get => _aobScanValue;
             set

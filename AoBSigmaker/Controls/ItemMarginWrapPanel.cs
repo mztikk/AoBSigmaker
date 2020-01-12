@@ -61,7 +61,7 @@ namespace AoBSigmaker.Controls
             UIElementCollection children = InternalChildren;
             for (int i = 0, count = children.Count; i < count; i++)
             {
-                FrameworkElement ele = children[i] as FrameworkElement;
+                FrameworkElement? ele = children[i] as FrameworkElement;
                 if (ele is { })
                 {
                     ele.Margin = ItemMargin;

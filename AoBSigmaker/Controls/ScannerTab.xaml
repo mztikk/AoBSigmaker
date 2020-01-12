@@ -54,12 +54,12 @@
                     </Button>
                     <StackPanel>
                         <TextBlock Text="Selected Process:"></TextBlock>
-                        <TextBlock Text="{Binding SelectedProcess, Converter={StaticResource processConverter}}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedProcess, Converter={StaticResource processConverter}, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                     </StackPanel>
                 </WrapPanel>
             </Grid>
-            
-            <Grid Grid.Row="0" Grid.Column="1" Visibility="{Binding CanSelectModule, Converter={StaticResource boolToVisConverter}}">
+
+            <Grid Grid.Row="0" Grid.Column="1" Visibility="{Binding CanSelectModule, Converter={StaticResource boolToVisConverter}, UpdateSourceTrigger=PropertyChanged}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                 </Grid.RowDefinitions>
@@ -70,7 +70,7 @@
                     </Button>
                     <StackPanel>
                         <TextBlock Text="Selected Module:"></TextBlock>
-                        <TextBlock Text="{Binding SelectedModule, Converter={StaticResource processModuleConverter}}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedModule, Converter={StaticResource processModuleConverter}, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                     </StackPanel>
                 </WrapPanel>
             </Grid>
@@ -92,10 +92,10 @@
 
                 <StackPanel Grid.Row="0" Grid.Column="0">
                     <TextBlock Text="Type:"></TextBlock>
-                    <ComboBox SelectedItem="{Binding SelectedMemoryType}" ItemsSource="{Binding MemoryTypeValues}">
+                    <ComboBox SelectedItem="{Binding SelectedMemoryType, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding MemoryTypeValues, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Converter={StaticResource memoryTypeConverter}}"/>
+                                <TextBlock Text="{Binding Converter={StaticResource memoryTypeConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
@@ -116,12 +116,12 @@
 
                         <StackPanel Grid.Row="0">
                             <TextBlock Text="Address of AoB:"></TextBlock>
-                            <TextBox IsReadOnly="True" Text="{Binding AobScanResult}"></TextBox>
+                            <TextBox IsReadOnly="True" Text="{Binding AobScanResult, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
 
                         <StackPanel Grid.Row="1">
                             <TextBlock Text="Value of Address:"></TextBlock>
-                            <TextBox IsReadOnly="True" Text="{Binding AobScanValue}"></TextBox>
+                            <TextBox IsReadOnly="True" Text="{Binding AobScanValue, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
                     </Grid>
                 </Grid>
