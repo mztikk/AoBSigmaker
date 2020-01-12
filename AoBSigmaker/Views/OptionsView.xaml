@@ -29,10 +29,10 @@
         </StackPanel>
 
         <lctrls:ItemMarginWrapPanel Grid.Row="3" Grid.Column="1" ItemMargin="0,0,5,0">
-            <Button Width="32" Height="32" Command="{s:Action Save}">
+            <Button Width="32" Height="32" Command="{s:Action Save}" IsDefault="True">
                 <iconPacks:PackIconMaterial Kind="Check" />
             </Button>
-            <Button Width="32" Height="32" Command="{s:Action Cancel}">
+            <Button Width="32" Height="32" Command="{s:Action Cancel}" IsCancel="True">
                 <iconPacks:PackIconMaterial Kind="Close" />
             </Button>
         </lctrls:ItemMarginWrapPanel>
