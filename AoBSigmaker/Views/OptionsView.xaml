@@ -8,9 +8,33 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:AoBSigmaker.Views"
         xmlns:lctrls="clr-namespace:AoBSigmaker.Controls"
-        mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800">
+                      Title="Options"
+        mc:Ignorable="d" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
 
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Controls:ToggleSwitch IsChecked="{Binding Options.TrustValidity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Trust Validity</Controls:ToggleSwitch>
+        </StackPanel>
+
+        <lctrls:ItemMarginWrapPanel Grid.Row="3" Grid.Column="1" ItemMargin="0,0,5,0">
+            <Button Width="32" Height="32" Command="{s:Action Save}">
+                <iconPacks:PackIconMaterial Kind="Check" />
+            </Button>
+            <Button Width="32" Height="32" Command="{s:Action Cancel}">
+                <iconPacks:PackIconMaterial Kind="Close" />
+            </Button>
+        </lctrls:ItemMarginWrapPanel>
     </Grid>
 </Controls:MetroWindow>
