@@ -18,11 +18,10 @@ namespace AoBSigmaker
             builder.Bind<IAobShortener>().To<AobShortener>();
 
             // config
-            const string cfgfile = "aobsigmaker.cfg";
             SigmakerOptions options;
-            if (File.Exists(cfgfile))
+            if (File.Exists(SigmakerOptions.OptionsFile))
             {
-                options = SigmakerOptions.LoadFromFile(cfgfile).GetAwaiter().GetResult();
+                options = SigmakerOptions.LoadFromFile().GetAwaiter().GetResult();
             }
             else
             {
