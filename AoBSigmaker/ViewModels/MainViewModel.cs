@@ -342,7 +342,7 @@ namespace AoBSigmaker.ViewModels
                     {
                         case MemoryType.None:
                             readValue = string.Empty;
-                            return;
+                            break;
                         case MemoryType.Byte:
                             readValue = memory.Read<byte>(intptr).ToString();
                             break;
